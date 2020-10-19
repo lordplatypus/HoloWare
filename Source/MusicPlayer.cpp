@@ -3,7 +3,7 @@
 
 MusicPlayer::MusicPlayer()
 {
-    music_[kiara_theme].openFromFile("./Kiara_Loading_Song.ogg");
+    music_[kiara_theme].openFromFile("./Resource/Kiara/Kiara_Loading_Song.ogg");
 }
 
 MusicPlayer::~MusicPlayer()

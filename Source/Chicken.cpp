@@ -2,9 +2,9 @@
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 
- Chicken::Chicken(sf::Vector2f position, MiniGame* mg)
+ Chicken::Chicken(sf::Vector2f position, Scene* scene)
 {
-    mg_ = mg;
+    scene_ = scene;
     tag_ = "Chicken";
     name_ = "Chicken";
     position_ = position;

@@ -3,11 +3,7 @@
 
 Score::Score(sf::Vector2f position)
 {
-//mg_ = mg;
-    tag_ = "Score";
-    name_ = "Score";
     position_ = position;
-
     scoreText_ = LP::SetText(std::to_string(scoreNum_), position_, 64);
 }
 
@@ -15,9 +11,6 @@ Score::~Score()
 {
     LP::DeleteText(scoreText_);
 }
-
-void Score::Update(float delta_time)
-{}
 
 void Score::Draw()
 {

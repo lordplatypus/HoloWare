@@ -5,7 +5,7 @@
 class  Points : public GameObject
 {
 public:
-     Points(sf::Vector2f position, int ID, Scene* scene);
+     Points(sf::Vector2f position, Scene* scene);
     ~ Points();
     void Update(float delta_time) override;
     void Draw() override;

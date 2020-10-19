@@ -3,9 +3,9 @@
 #include "../Header/ID.h"
 #include "../Header/Points.h"
 
-Kiara::Kiara(sf::Vector2f position, MiniGame* mg)
+Kiara::Kiara(sf::Vector2f position, Scene* scene)
 {
-    mg_ = mg;
+    scene_ = scene;
     tag_ = "Player";
     name_ = "Kiara";
     position_ = position;
@@ -48,7 +48,7 @@ void Kiara::ReactOnCollision(GameObject& other)
     if (other.GetTag() == "Chicken")
     {
         score_->AddToScore(100);
-        scene_->AddGameObject(new Points(sf::Vector2f(1920 - 300, 0), 0, scene_));
+        scene_->AddGameObject(new Points(sf::Vector2f(1920 - 300, 0), scene_));
     }
 }
 

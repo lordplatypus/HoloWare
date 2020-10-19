@@ -1,10 +1,9 @@
 #include "../Header/Points.h"
 #include "../Header/LP.h"
 
-Points::Points(sf::Vector2f position, int ID, Scene* scene)
+Points::Points(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
-    ID_ = ID;
     tag_ = "Points";
     name_ = "Points";
     position_ = position;

@@ -1,8 +1,9 @@
 #include "../Header/ChickenSpawner.h"
 #include "../Header/Chicken.h"
 
-ChickenSpawner::ChickenSpawner(MiniGame* mg) : mg_{mg}
+ChickenSpawner::ChickenSpawner(Scene* scene)
 {
+    scene_ = scene;
     tag_ = "Spawner";
     name_ = "ChickenSpawner";
 }
@@ -16,7 +17,7 @@ void ChickenSpawner::Update(float delta_time)
     if (timer_ <= 0.0f)
     {
         timer_ = rand() % 5 + 1;
-        scene_->AddGameObject(new Chicken(sf::Vector2f(1920, -100), chickenID_, scene_));
+        scene_->AddGameObject(new Chicken(sf::Vector2f(1920, -100), scene_));
         chickenID_++;
     }
 }

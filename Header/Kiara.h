@@ -2,12 +2,11 @@
 #define KIARA_H_
 #include "GameObject.h"
 #include "Score.h"
-#include "MiniGame.h"
 
 class Kiara : public GameObject
 {
 public:
-    Kiara(sf::Vector2f position, MiniGame* mg);
+    Kiara(sf::Vector2f position, Scene* scene);
     ~Kiara();
     void Update(float delta_time) override;
     void Draw() override;
@@ -18,7 +17,6 @@ private:
     void AnimationHandle(float delta_time);
 
 private:
-    MiniGame* mg_{nullptr};
     //Sprites
     std::vector<int> playerSprite_;
     int shadowSprite_{0};

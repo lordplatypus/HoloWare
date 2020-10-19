@@ -3,7 +3,6 @@
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
-#include "MiniGameManager.h"
 
 class SceneGame : public Scene
 {
@@ -20,9 +19,6 @@ public:
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
-    MiniGameManager mgm_;
-    
-
     int background_{0};
 };
 
