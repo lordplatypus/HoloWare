@@ -3,6 +3,10 @@
 
 enum //Images
 {
+    tako_image,
+    ina_door_image,
+    ina_background_image,
+    ina_loading_image,
     kiara_image,
     background_image,
     chicken_image,
@@ -21,8 +25,10 @@ enum //Difficulty
     hard_difficulty
 };
 
-enum //MiniGame
+enum Scenes//Scenes
 {
+    title_scene,
+    minigame_scene,
     kiara_minigame
 };
 

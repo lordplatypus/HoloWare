@@ -4,17 +4,20 @@
 #include "Scene.h"
 #include "LoadImage.h"
 #include "MusicPlayer.h"
+#include "Camera.h"
 
 class Game
 {
 public:
-    Game();
+    Game(Camera* camera);
     ~Game();
     void Update(float delta_time);
     void Draw();
     void AddScene(const std::string& name, Scene* scene);
     void ChangeScene(const std::string& newScene);
     void EndScene();
+    int GetMiniGameCount() const;
+    Camera* GetCamera();
     void PlayMusic(const int musicID, const bool loop);
     void Clear();
 
@@ -22,6 +25,7 @@ public:
     Game& operator = (const Game& other) = delete;
 
 private:
+    Camera* camera_{nullptr};
     std::unordered_map<std::string, Scene*> scenes_;
     Scene* scene_ {nullptr};
     LoadImage loadImage_;

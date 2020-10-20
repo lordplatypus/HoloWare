@@ -1,18 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "../Header/Game.h"
+#include "../Header/ID.h"
 #include "../Header/SceneNull.h"
-#include "../Header/SceneGame.h"
+#include "../Header/SceneTitle.h"
+#include "../Header/SceneMiniGame.h"
+#include "../Header/SceneKiaraMiniGame.h"
 
 static SceneNull nullScene;
 
-Game::Game() : scene_{&nullScene}
+Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 {
     loadImage_.Load();
 
-    AddScene("Game", new SceneGame(this));
+    AddScene("Title", new SceneTitle(this));
+    AddScene("MiniGame", new SceneMiniGame(this));
+    AddScene("KiaraMiniGame", new SceneKiaraMiniGame(this));
 
-    scene_ = scenes_["Game"];
+    scene_ = scenes_["Title"];
     scene_->Init();
 }
 
@@ -47,6 +52,16 @@ void Game::EndScene()
 {
     scene_->End();
     scene_ = &nullScene;
+}
+
+int Game::GetMiniGameCount() const
+{
+    return scenes_.size() - 2;
+}
+
+Camera* Game::GetCamera()
+{
+    return camera_;
 }
 
 void Game::PlayMusic(const int musicID, const bool loop)

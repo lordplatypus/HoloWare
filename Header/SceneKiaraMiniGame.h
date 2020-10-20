@@ -1,14 +1,14 @@
-#ifndef SCENE_GAME_H_
-#define SCENE_GAME_H_
+#ifndef SCENE_KIARA_MINI_GAME_H_
+#define SCENE_KIARA_MINI_GAME_H_
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
 
-class SceneGame : public Scene
+class SceneKiaraMiniGame : public Scene
 {
 public:
-    SceneGame(Game* game);
-    ~SceneGame();
+    SceneKiaraMiniGame(Game* game);
+    ~SceneKiaraMiniGame();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
     virtual void Draw() override;

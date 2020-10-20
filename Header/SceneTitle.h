@@ -20,6 +20,7 @@ private:
     Game* game_{nullptr};
     GameObjectManager gom_;
     int background_{0};
+    int titleText_{0};
 };
 
 #endif
