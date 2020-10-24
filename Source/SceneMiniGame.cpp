@@ -13,12 +13,22 @@ SceneMiniGame::~SceneMiniGame()
 
 void SceneMiniGame::Init()
 {//Occurs everytime the scene is loaded
+    if (game_->GetWinStatus())
+    {//win
+
+    }
+    else
+    {//lose
+        hp_--;
+    }
+    game_->SetWinStatus(false); //reset win for next game
+
     game_->GetCamera()->SetCameraViewSize(480, 270);
     game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
 
     background_ = LP::SetSprite(ina_background_image, sf::Vector2f(0.0f, 0.0f));
 
-    AddGameObject(new InaLoading(sf::Vector2f(0.0f, game_->GetCamera()->GetCameraTopEdge() + 64), this));
+    AddGameObject(new InaLoading(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x - 160, game_->GetCamera()->GetCameraTopEdge() + 64), this));
 
     timer_ = 5.0f;
     timerText_ = LP::SetText(std::to_string(timer_), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 32);

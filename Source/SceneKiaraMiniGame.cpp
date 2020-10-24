@@ -22,9 +22,9 @@ void SceneKiaraMiniGame::Init()
     game_->PlayMusic(kiara_theme, true);
 
     AddGameObject(new InaDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 1920/2, game_->GetCamera()->GetCameraTopEdge()), this));
+                              sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 1920/2, game_->GetCamera()->GetCameraTopEdge()), this, 4.0f));
     AddGameObject(new InaDoor(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), this));
+                              sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), this, 4.0f));
 }
 
 void SceneKiaraMiniGame::Update(float delta_time)
