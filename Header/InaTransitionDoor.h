@@ -1,13 +1,13 @@
-#ifndef INA_DOOR_H_
-#define INA_DOOR_H_
+#ifndef INA_TRANSITION_DOOR_H_
+#define INA_TRANSITION_DOOR_H_
 #include "GameObject.h"
 #include "Math.h"
 
-class InaDoor : public GameObject
+class InaTransitionDoor : public GameObject
 {
 public:
-    InaDoor(sf::Vector2f position, sf::Vector2f endPosition, Scene* scene, float scale = 1.0f);
-    ~InaDoor();
+    InaTransitionDoor(sf::Vector2f position, sf::Vector2f endPosition, Scene* scene, float scale = 1.0f);
+    ~InaTransitionDoor();
     void Update(float delta_time) override;
     void Draw() override;
     void ReactOnCollision(GameObject& other) override;

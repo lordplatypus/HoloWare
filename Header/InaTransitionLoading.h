@@ -1,12 +1,12 @@
-#ifndef INA_LOADING_H_
-#define INA_LOADING_H_
+#ifndef INA_TRANSITION_LOADING_H_
+#define INA_TRANSITION_LOADING_H_
 #include "GameObject.h"
 
-class InaLoading : public GameObject
+class InaTransitionLoading : public GameObject
 {
 public:
-    InaLoading(sf::Vector2f position, Scene* scene);
-    ~InaLoading();
+    InaTransitionLoading(sf::Vector2f position, Scene* scene);
+    ~InaTransitionLoading();
     void Update(float delta_time) override;
     void Draw() override;
     void ReactOnCollision(GameObject& other) override;

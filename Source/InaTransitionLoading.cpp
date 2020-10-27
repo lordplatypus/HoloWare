@@ -1,8 +1,8 @@
-#include "../Header/InaLoading.h"
+#include "../Header/InaTransitionLoading.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 
-InaLoading::InaLoading(sf::Vector2f position, Scene* scene)
+InaTransitionLoading::InaTransitionLoading(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
     tag_ = "Loading";
@@ -11,7 +11,7 @@ InaLoading::InaLoading(sf::Vector2f position, Scene* scene)
     imageWidth_ = 32;
     imageHeight_ = 32;
 
-    letterSprites_ = LP::SetSprite(ina_loading_image, imageWidth_, imageHeight_, 10, 1);
+    letterSprites_ = LP::SetSprite(ina_transition_loading_image, imageWidth_, imageHeight_, 10, 1);
     scales_.push_back(0.5f);
     for (int i = 1; i < letterSprites_.size(); i++) scales_.push_back(1.0f);
 
@@ -19,12 +19,12 @@ InaLoading::InaLoading(sf::Vector2f position, Scene* scene)
     LP::SetSpriteScale(letterSprites_[0], scales_[0], scales_[0]);
 }
 
-InaLoading::~InaLoading()
+InaTransitionLoading::~InaTransitionLoading()
 {
     for (auto i : letterSprites_) LP::DeleteSprite(i);
 }
 
-void InaLoading::Update(float delta_time)
+void InaTransitionLoading::Update(float delta_time)
 {
     timer_ += delta_time;
     if (timer_ >= 0.2f)
@@ -39,10 +39,10 @@ void InaLoading::Update(float delta_time)
     }
 }
 
-void InaLoading::Draw()
+void InaTransitionLoading::Draw()
 {
     for (int i = 0; i < letterSprites_.size(); i++) LP::DrawSprite(letterSprites_[i], sf::Vector2f(position_.x + i * 32, position_.y));
 }
 
-void InaLoading::ReactOnCollision(GameObject& other)
+void InaTransitionLoading::ReactOnCollision(GameObject& other)
 {}

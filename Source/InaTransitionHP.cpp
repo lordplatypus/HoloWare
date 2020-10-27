@@ -1,8 +1,8 @@
-#include "../Header/Tako.h"
+#include "../Header/InaTransitionHP.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 
-Tako::Tako(sf::Vector2f position, Scene* scene)
+InaTransitionHP::InaTransitionHP(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
     tag_ = "HPIcon";
@@ -11,7 +11,7 @@ Tako::Tako(sf::Vector2f position, Scene* scene)
     imageWidth_ = 64;
     imageHeight_ = 64;
 
-    takoSprite_ = LP::SetSprite(tako_image, imageWidth_, imageHeight_, 4, 1);
+    takoSprite_ = LP::SetSprite(ina_transition_hp_image, imageWidth_, imageHeight_, 4, 1);
     for (auto i : takoSprite_) 
     {
         LP::SetSpriteOriginCenter(i);
@@ -19,12 +19,12 @@ Tako::Tako(sf::Vector2f position, Scene* scene)
     }
 }
 
-Tako::~Tako()
+InaTransitionHP::~InaTransitionHP()
 {
     for (auto i : takoSprite_) LP::DeleteSprite(i);
 }
 
-void Tako::Update(float delta_time)
+void InaTransitionHP::Update(float delta_time)
 {
     AnimationHandle(delta_time);
     ScaleHandle(delta_time);
@@ -38,15 +38,15 @@ void Tako::Update(float delta_time)
     }
 }
 
-void Tako::Draw()
+void InaTransitionHP::Draw()
 {
     LP::DrawSprite(takoSprite_[frame_], position_);
 }
 
-void Tako::ReactOnCollision(GameObject& other)
+void InaTransitionHP::ReactOnCollision(GameObject& other)
 {}
 
-void Tako::AnimationHandle(float delta_time)
+void InaTransitionHP::AnimationHandle(float delta_time)
 {
     timer_ += delta_time;
     if (timer_ >= 1.0f)
@@ -57,7 +57,7 @@ void Tako::AnimationHandle(float delta_time)
     }
 }
 
-void Tako::ScaleHandle(float delta_time)
+void InaTransitionHP::ScaleHandle(float delta_time)
 {
     scaleTimer_ += delta_time;
     if (scaleTimer_ >= 0.5f)

@@ -1,8 +1,8 @@
-#include "../Header/InaTimer.h"
+#include "../Header/InaTransitionTimer.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 
-InaTimer::InaTimer(sf::Vector2f position, int sec, float scale, Scene* scene)
+InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, int sec, float scale, Scene* scene)
 {
     scene_ = scene;
     tag_ = "Timer";
@@ -10,22 +10,22 @@ InaTimer::InaTimer(sf::Vector2f position, int sec, float scale, Scene* scene)
     position_ = position;
     sec_ = sec;
 
-    end_ = LP::SetSprite(ina_timer_end_image, position_);
+    end_ = LP::SetSprite(ina_transition_timer_end_image, position_);
     for (int i = 0; i < sec_; i++)
     {
-        segments_.push_back(LP::SetSprite(ina_timer_segment_image, sf::Vector2f(position_.x + 64 + 128 * i, position_.y)));
+        segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + 64 + 128 * i, position_.y)));
     }
-    bomb_ = LP::SetSprite(ina_timer_bomb_image, sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
+    bomb_ = LP::SetSprite(ina_transition_timer_bomb_image, sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
 }
 
-InaTimer::~InaTimer()
+InaTransitionTimer::~InaTransitionTimer()
 {
     for (auto segment : segments_) LP::DeleteSprite(segment);
     LP::DeleteSprite(end_);
     LP::DeleteSprite(bomb_);
 }
 
-void InaTimer::Update(float delta_time)
+void InaTransitionTimer::Update(float delta_time)
 {
     timer_ -= delta_time;
     if (timer_ <= 0.0f)
@@ -39,7 +39,7 @@ void InaTimer::Update(float delta_time)
     }
 }
 
-void InaTimer::Draw()
+void InaTransitionTimer::Draw()
 {
     LP::DrawSprite(end_);
     for (auto segment : segments_) LP::DrawSprite(segment);

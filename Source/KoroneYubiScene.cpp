@@ -1,0 +1,84 @@
+#include "../Header/KoroneYubiScene.h"
+#include "../Header/LP.h"
+#include "../Header/KoroneYubiHand.h"
+#include "../Header/KoroneYubiStream.h"
+
+KoroneYubiScene::KoroneYubiScene(Game* game) : game_{game}
+{}
+
+KoroneYubiScene::~KoroneYubiScene()
+{}
+
+void KoroneYubiScene::Init()
+{
+    kym_ = new KoroneYubiManager(this);
+
+    game_->GetCamera()->SetCameraViewSize(480, 270);
+    game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
+
+    for (int i = 0; i <= difficulty_; i++)
+    {
+        AddGameObject(new KoroneYubiHand(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x - (136 * difficulty_)/2 - 68 + 136 * i, game_->GetCamera()->GetCameraBottomEdge() - 64*2), i, kym_, this));
+    }
+    kym_->SetDifficulty(difficulty_);
+    textAlpha_ = 255;
+
+    text_ = LP::SetText("Korone's stream is starting,\npay the yubi tax!", sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraCenter().y - 64), 64);
+    LP::SetTextOriginCenter(text_);
+    LP::SetTextScale(text_, .2f, .2f);
+}
+
+void KoroneYubiScene::Update(float delta_time)
+{
+    gom_.Update(delta_time); //update all gameobjects
+    gom_.Collision(); //check collision between gameobjects
+    gom_.Remove(); //remove "dead" gameobjects
+
+    if (textAlpha_ > 0) 
+    {
+        textTimer_ -= delta_time;
+        if (textTimer_ < 0.0f)
+        {
+            textAlpha_ -= 10;
+            if (textAlpha_ < 0) textAlpha_ = 0;
+            LP::SetTextColor(text_, 255, 255, 255, textAlpha_);
+            textTimer_ = 0.1f;
+        }
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    {
+        ChangeScene("MiniGame");
+    }
+}
+
+void KoroneYubiScene::Draw()
+{
+    gom_.Draw(); //Draw all gameobjects
+    LP::DrawText(text_);
+}
+
+void KoroneYubiScene::AddGameObject(GameObject* gameObject)
+{
+    gom_.Add(gameObject); //add gameobject to the list of gameobjects
+}
+
+void KoroneYubiScene::OnWin()
+{
+    for (int i = 0; i <= difficulty_; i++)
+    {
+        gom_.Find(i)->Kill();
+    }
+    AddGameObject(new KoroneYubiStream(sf::Vector2f(0.0f, 0.0f), this));
+}
+
+void KoroneYubiScene::ChangeScene(const std::string& sceneName)
+{
+    game_->ChangeScene(sceneName);
+}
+
+void KoroneYubiScene::End()
+{
+    gom_.Clear();
+    delete kym_;
+}

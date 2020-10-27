@@ -1,8 +1,8 @@
-#include "../Header/Chicken.h"
+#include "../Header/KiaraChickenChicken.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 
- Chicken::Chicken(sf::Vector2f position, Scene* scene)
+ KiaraChickenChicken::KiaraChickenChicken(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
     tag_ = "Chicken";
@@ -17,28 +17,28 @@
     SetTop(0);
     SetBottom(imageHeight_);
 
-    sprite_ = LP::SetSprite(chicken_image, position_);
+    sprite_ = LP::SetSprite(kiara_chicken_chicken_image, position_);
     LP::SetSpriteOriginCenter(sprite_);
 }
 
- Chicken::~Chicken()
+ KiaraChickenChicken::~KiaraChickenChicken()
 {
     LP::DeleteSprite(sprite_);
 }
 
-void  Chicken::Update(float delta_time)
+void  KiaraChickenChicken::Update(float delta_time)
 {
     position_ += velocity_ * delta_time;
     angle_ += angleVelocity_ * delta_time;
     LP::SetSpriteRotation(sprite_, angle_);
 }
 
-void  Chicken::Draw()
+void  KiaraChickenChicken::Draw()
 {
     LP::DrawSprite(sprite_, position_);
 }
 
-void  Chicken::ReactOnCollision(GameObject& other)
+void  KiaraChickenChicken::ReactOnCollision(GameObject& other)
 {
     if (other.GetTag() == "Player") Kill();
 }

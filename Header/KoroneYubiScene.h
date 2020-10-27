@@ -1,14 +1,16 @@
-#ifndef SCENE_KIARA_MINI_GAME_H_
-#define SCENE_KIARA_MINI_GAME_H_
+#ifndef KORONE_YUBI_SCENE_H_
+#define KORONE_YUBI_SCENE_H_
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
+#include "ID.h"
+#include "KoroneYubiManager.h"
 
-class SceneKiaraMiniGame : public Scene
+class KoroneYubiScene : public Scene
 {
 public:
-    SceneKiaraMiniGame(Game* game);
-    ~SceneKiaraMiniGame();
+    KoroneYubiScene(Game* game);
+    ~KoroneYubiScene();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
     virtual void Draw() override;
@@ -20,7 +22,11 @@ public:
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
-    int background_{0};
+    KoroneYubiManager* kym_{nullptr};
+    int difficulty_{medium_difficulty};
+    int text_{0};
+    int textAlpha_{255};
+    float textTimer_{0.1f};
 };
 
 #endif

@@ -1,12 +1,12 @@
-#ifndef INA_TIMER_H_
-#define INA_TIMER_H_
+#ifndef INA_TRANSITION_TIMER_H_
+#define INA_TRANSITION_TIMER_H_
 #include "GameObject.h"
 
-class InaTimer : public GameObject
+class InaTransitionTimer : public GameObject
 {
 public:
-    InaTimer(sf::Vector2f position, int sec, float scale, Scene* scene);
-    ~InaTimer();
+    InaTransitionTimer(sf::Vector2f position, int sec, float scale, Scene* scene);
+    ~InaTransitionTimer();
     void Update(float delta_time) override;
     void Draw() override;
 

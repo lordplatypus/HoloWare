@@ -3,17 +3,23 @@
 
 enum //Images
 {
-    tako_image,
-    ina_door_image,
-    ina_background_image,
-    ina_loading_image,
-    ina_timer_end_image,
-    ina_timer_segment_image,
-    ina_timer_bomb_image,
-    kiara_image,
-    background_image,
-    chicken_image,
-    shadow_image
+    ina_transition_hp_image,
+    ina_transition_door_image,
+    ina_transition_background_image,
+    ina_transition_loading_image,
+    ina_transition_timer_end_image,
+    ina_transition_timer_segment_image,
+    ina_transition_timer_bomb_image,
+    kiara_chicken_kiara_image,
+    kiara_chicken_background_image,
+    kiara_chicken_chicken_image,
+    kiara_chicken_shadow_image,
+    korone_yubi_left_hand_image,
+    korone_yubi_right_hand_image,
+    korone_yubi_stream_image,
+    korone_yubi_laugh1_image,
+    korone_yubi_laugh2_image,
+    korone_yubi_chat_image,
 };
 
 enum //Music

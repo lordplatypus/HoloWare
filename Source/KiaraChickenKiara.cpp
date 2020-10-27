@@ -1,9 +1,9 @@
-#include "../Header/Kiara.h"
+#include "../Header/KiaraChickenKiara.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 #include "../Header/Points.h"
 
-Kiara::Kiara(sf::Vector2f position, Scene* scene)
+KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
     tag_ = "Player";
@@ -17,33 +17,33 @@ Kiara::Kiara(sf::Vector2f position, Scene* scene)
     SetTop(375);
     SetBottom(375 + 225);
 
-    playerSprite_ = LP::SetSprite(kiara_image, 1142 / 2, 1043, 2, 1);
-    shadowSprite_ = LP::SetSprite(shadow_image, sf::Vector2f(position_.x, position_.y + imageHeight_));
+    playerSprite_ = LP::SetSprite(kiara_chicken_kiara_image, 1142 / 2, 1043, 2, 1);
+    shadowSprite_ = LP::SetSprite(kiara_chicken_shadow_image, sf::Vector2f(position_.x, position_.y + imageHeight_));
 
     score_ = new Score(sf::Vector2f(50.0f, 50.0f));
 }
 
-Kiara::~Kiara()
+KiaraChickenKiara::~KiaraChickenKiara()
 {
     for (auto i : playerSprite_) LP::DeleteSprite(i);
     LP::DeleteSprite(shadowSprite_);
     delete score_;
 }
 
-void Kiara::Update(float delta_time)
+void KiaraChickenKiara::Update(float delta_time)
 {
     InputHandle(delta_time);
     AnimationHandle(delta_time);
 }
 
-void Kiara::Draw()
+void KiaraChickenKiara::Draw()
 {
     LP::DrawSprite(shadowSprite_, sf::Vector2f(position_.x, position_.y + imageHeight_ - 50));
     LP::DrawSprite(playerSprite_[frame_], position_);
     score_->Draw();
 }
 
-void Kiara::ReactOnCollision(GameObject& other)
+void KiaraChickenKiara::ReactOnCollision(GameObject& other)
 {
     if (other.GetTag() == "Chicken")
     {
@@ -52,7 +52,7 @@ void Kiara::ReactOnCollision(GameObject& other)
     }
 }
 
-void Kiara::InputHandle(float delta_time)
+void KiaraChickenKiara::InputHandle(float delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
@@ -67,7 +67,7 @@ void Kiara::InputHandle(float delta_time)
     if (position_.x + imageWidth_ > 1920) position_.x = 1920 - imageWidth_;
 }
 
-void Kiara::AnimationHandle(float delta_time)
+void KiaraChickenKiara::AnimationHandle(float delta_time)
 {
     timer_ += delta_time;
     if (timer_ >= 0.3f)

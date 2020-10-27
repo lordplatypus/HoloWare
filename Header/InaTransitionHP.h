@@ -1,13 +1,13 @@
-#ifndef TAKO_H_
-#define TAKO_H_
+#ifndef INA_TRANSITION_HP_H_
+#define INA_TRANSITION_HP_H_
 #include "GameObject.h"
 #include "Math.h"
 
-class Tako : public GameObject
+class InaTransitionHP : public GameObject
 {
 public:
-    Tako(sf::Vector2f position, Scene* scene);
-    ~Tako();
+    InaTransitionHP(sf::Vector2f position, Scene* scene);
+    ~InaTransitionHP();
     void Update(float delta_time) override;
     void Draw() override;
     void ReactOnCollision(GameObject& other) override;

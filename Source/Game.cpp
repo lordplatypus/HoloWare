@@ -5,7 +5,8 @@
 #include "../Header/SceneNull.h"
 #include "../Header/SceneTitle.h"
 #include "../Header/SceneMiniGame.h"
-#include "../Header/SceneKiaraMiniGame.h"
+#include "../Header/KiaraChickenScene.h"
+#include "../Header/KoroneYubiScene.h"
 
 static SceneNull nullScene;
 
@@ -15,7 +16,8 @@ Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 
     AddScene("Title", new SceneTitle(this));
     AddScene("MiniGame", new SceneMiniGame(this));
-    AddScene("KiaraMiniGame", new SceneKiaraMiniGame(this));
+    AddScene("KiaraChicken", new KiaraChickenScene(this));
+    AddScene("KoroneYubi", new KoroneYubiScene(this));
 
     scene_ = scenes_["Title"];
     scene_->Init();

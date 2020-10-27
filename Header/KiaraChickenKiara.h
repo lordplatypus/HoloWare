@@ -1,13 +1,13 @@
-#ifndef KIARA_H_
-#define KIARA_H_
+#ifndef KIARA_CHICKEN_KIARA_H_
+#define KIARA_CHICKEN_KIARA_H_
 #include "GameObject.h"
 #include "Score.h"
 
-class Kiara : public GameObject
+class KiaraChickenKiara : public GameObject
 {
 public:
-    Kiara(sf::Vector2f position, Scene* scene);
-    ~Kiara();
+    KiaraChickenKiara(sf::Vector2f position, Scene* scene);
+    ~KiaraChickenKiara();
     void Update(float delta_time) override;
     void Draw() override;
     void ReactOnCollision(GameObject& other) override;

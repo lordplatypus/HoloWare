@@ -13,7 +13,8 @@ public:
     void Draw() const;
     void Collision();
     void Remove();
-    GameObject* Find(const std::string& name) const;
+    GameObject* Find(const std::string& tag) const;
+    GameObject* Find(const int ID) const;
     void Clear();
 
     GameObjectManager(const GameObjectManager& other) = delete;

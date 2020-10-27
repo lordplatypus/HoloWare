@@ -15,15 +15,21 @@ LoadImage::~LoadImage()
 void LoadImage::Load()
 {
     LP::SetFont("./Resource/Kiara/Blue Sky 8x8.ttf");
-    LP::SetTexture(tako_image, "./Resource/MiniGameTransition/Ina/Tako.png", 256, 64);
-    LP::SetTexture(ina_door_image, "./Resource/MiniGameTransition/Ina/InaDoor.png", 240, 270);
-    LP::SetTexture(ina_background_image, "./Resource/MiniGameTransition/Ina/InaBackground.png", 480, 270);
-    LP::SetTexture(ina_loading_image, "./Resource/MiniGameTransition/Ina/InaLoading.png", 320, 32);
-    LP::SetTexture(ina_timer_end_image, "./Resource/MiniGameTransition/Ina/InaTimerEnd.png", 64, 64);
-    LP::SetTexture(ina_timer_bomb_image, "./Resource/MiniGameTransition/Ina/InaTimerBomb.png", 64, 64);
-    LP::SetTexture(ina_timer_segment_image, "./Resource/MiniGameTransition/Ina/InaTimerSegment.png", 128, 64);
-    LP::SetTexture(kiara_image, "./Resource/Kiara/Kiara.png", 1142, 1043);
-    LP::SetTexture(background_image, "./Resource/Kiara/Background.png", 1920, 1080);
-    LP::SetTexture(chicken_image, "./Resource/Kiara/Chicken.png", 59, 90);
-    LP::SetTexture(shadow_image, "./Resource/Kiara/Shadow.png", 448, 99);
+    LP::SetTexture(ina_transition_hp_image, "./Resource/MiniGameTransition/Ina/Tako.png", 256, 64);
+    LP::SetTexture(ina_transition_door_image, "./Resource/MiniGameTransition/Ina/InaDoor.png", 240, 270);
+    LP::SetTexture(ina_transition_background_image, "./Resource/MiniGameTransition/Ina/InaBackground.png", 480, 270);
+    LP::SetTexture(ina_transition_loading_image, "./Resource/MiniGameTransition/Ina/InaLoading.png", 320, 32);
+    LP::SetTexture(ina_transition_timer_end_image, "./Resource/MiniGameTransition/Ina/InaTimerEnd.png", 64, 64);
+    LP::SetTexture(ina_transition_timer_bomb_image, "./Resource/MiniGameTransition/Ina/InaTimerBomb.png", 64, 64);
+    LP::SetTexture(ina_transition_timer_segment_image, "./Resource/MiniGameTransition/Ina/InaTimerSegment.png", 128, 64);
+    LP::SetTexture(kiara_chicken_kiara_image, "./Resource/Kiara/Kiara.png", 1142, 1043);
+    LP::SetTexture(kiara_chicken_background_image, "./Resource/Kiara/Background.png", 1920, 1080);
+    LP::SetTexture(kiara_chicken_chicken_image, "./Resource/Kiara/Chicken.png", 59, 90);
+    LP::SetTexture(kiara_chicken_shadow_image, "./Resource/Kiara/Shadow.png", 448, 99);
+    LP::SetTexture(korone_yubi_left_hand_image, "./Resource/Korone/LeftHand.png", 408, 64);
+    LP::SetTexture(korone_yubi_right_hand_image, "./Resource/Korone/RightHand.png", 408, 64);
+    LP::SetTexture(korone_yubi_stream_image, "./Resource/Korone/Korone_Stream.png", 480, 270);
+    LP::SetTexture(korone_yubi_laugh1_image, "./Resource/Korone/Korone_Laugh1.png", 16, 28);
+    LP::SetTexture(korone_yubi_laugh2_image, "./Resource/Korone/Korone_Laugh2.png", 31, 22);
+    LP::SetTexture(korone_yubi_chat_image, "./Resource/Korone/Korone_Chat.png", 525, 44);
 }
