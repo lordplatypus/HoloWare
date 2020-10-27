@@ -37,6 +37,9 @@ void SceneTitle::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject);
 }
 
+void SceneTitle::OnWin()
+{}
+
 void SceneTitle::ChangeScene(const std::string& sceneName)
 {
     game_->ChangeScene(sceneName);

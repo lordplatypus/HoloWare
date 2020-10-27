@@ -59,12 +59,12 @@ int Game::GetMiniGameCount() const
     return scenes_.size() - 2;
 }
 
-void Game::SetWinStatus(const bool win)
+void Game::SetWin(const bool win)
 {
     win_ = win;
 }
 
-bool Game::GetWinStatus() const
+bool Game::GetWin() const
 {
     return win_;
 }

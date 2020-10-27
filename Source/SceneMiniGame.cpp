@@ -4,6 +4,7 @@
 #include "../Header/InaDoor.h"
 #include "../Header/Tako.h"
 #include "../Header/InaLoading.h"
+#include "../Header/InaTimer.h"
 
 SceneMiniGame::SceneMiniGame(Game* game) : game_{game}
 {}
@@ -13,7 +14,9 @@ SceneMiniGame::~SceneMiniGame()
 
 void SceneMiniGame::Init()
 {//Occurs everytime the scene is loaded
-    if (game_->GetWinStatus())
+    state_ = First;
+
+    if (game_->GetWin())
     {//win
 
     }
@@ -21,7 +24,7 @@ void SceneMiniGame::Init()
     {//lose
         hp_--;
     }
-    game_->SetWinStatus(false); //reset win for next game
+    game_->SetWin(false); //reset win for next game
 
     game_->GetCamera()->SetCameraViewSize(480, 270);
     game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
@@ -36,6 +39,8 @@ void SceneMiniGame::Init()
 
     for (int i = 0; i < hp_; i++) 
         AddGameObject(new Tako(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp_) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
+
+    AddGameObject(new InaTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 3, 1.0f, this));
 
     AddGameObject(new InaDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 
                               sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 240, game_->GetCamera()->GetCameraTopEdge()), this));
@@ -81,6 +86,9 @@ void SceneMiniGame::AddGameObject(GameObject* gameObject)
 {
     gom_.Add(gameObject);
 }
+
+void SceneMiniGame::OnWin()
+{}
 
 void SceneMiniGame::ChangeScene(const std::string& sceneName)
 {

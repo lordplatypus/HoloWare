@@ -50,6 +50,11 @@ void SceneKiaraMiniGame::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject);
 }
 
+void SceneKiaraMiniGame::OnWin()
+{
+    game_->SetWin(true);
+}
+
 void SceneKiaraMiniGame::ChangeScene(const std::string& sceneName)
 {
     game_->ChangeScene(sceneName);

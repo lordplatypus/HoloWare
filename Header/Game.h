@@ -21,8 +21,8 @@ public:
 
     //MiniGame Management
     int GetMiniGameCount() const;
-    void SetWinStatus(const bool win);
-    bool GetWinStatus() const;
+    void SetWin(const bool win);
+    bool GetWin() const;
 
     //Camera
     Camera* GetCamera();
