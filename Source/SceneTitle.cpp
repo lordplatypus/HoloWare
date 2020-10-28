@@ -24,7 +24,7 @@ void SceneTitle::Update(float delta_time)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
     {
-        ChangeScene("InaTransition");
+        game_->ChangeScene("InaTransition");
     }
 }
 
@@ -45,10 +45,8 @@ void SceneTitle::OnWin()
 void SceneTitle::OnLoss()
 {}
 
-void SceneTitle::ChangeScene(const std::string& sceneName)
-{
-    game_->ChangeScene(sceneName);
-}
+void SceneTitle::ChangeScene()
+{}
 
 void SceneTitle::End()
 {

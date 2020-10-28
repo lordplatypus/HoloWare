@@ -16,7 +16,7 @@ public:
     virtual void AddGameObject(GameObject* gameObject) override;
     virtual void OnWin() override;
     virtual void OnLoss() override;
-    virtual void ChangeScene(const std::string& sceneName) override;
+    virtual void ChangeScene() override;
     virtual void End() override;
 
 private:
@@ -46,6 +46,9 @@ private:
         CloseDoor,
     };
     State state_{WinState};
+
+    //Scene transition
+    bool changeScene_{false};
 };
 
 #endif

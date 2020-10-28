@@ -11,7 +11,7 @@ public:
     virtual void AddGameObject(GameObject* gameObject) override {}
     virtual void OnWin() override {}
     virtual void OnLoss() override {}
-    virtual void ChangeScene(const std::string& sceneName) override {}
+    virtual void ChangeScene() override {}
     virtual void End() override {}
 };
 

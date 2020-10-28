@@ -3,7 +3,7 @@
 #include "../Header/ID.h"
 #include "../Header/KiaraChickenKiara.h"
 #include "../Header/KiaraChickenSpawner.h"
-#include "../Header/InaTransitionDoor.h"
+#include "../Header/InaTransitionDoorOpen.h"
 
 KiaraChickenScene::KiaraChickenScene(Game* game) : game_{game}
 {}
@@ -21,10 +21,7 @@ void KiaraChickenScene::Init()
     gom_.Add(new KiaraChickenSpawner(this));
     game_->PlayMusic(kiara_theme, true);
 
-    AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 1920/2, game_->GetCamera()->GetCameraTopEdge()), this, 4.0f));
-    AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), this, 4.0f));
+    AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this, 4.0f));
 }
 
 void KiaraChickenScene::Update(float delta_time)
@@ -33,9 +30,16 @@ void KiaraChickenScene::Update(float delta_time)
     gom_.Collision();
     gom_.Remove();
 
+    if (changeScene_)
+    {
+        changeScene_ = false;
+        game_->ChangeScene("InaTransition");
+    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
-        ChangeScene("InaTransition");
+        OnLoss();
+        game_->ChangeScene("InaTransition");
     }
 }
 
@@ -57,13 +61,14 @@ void KiaraChickenScene::OnWin()
 
 void KiaraChickenScene::OnLoss()
 {
+    if (game_->GetMiniGameManager()->GetWin()) return;
     game_->GetMiniGameManager()->SetWin(false);
     game_->GetMiniGameManager()->DecrementHP();
 }
 
-void KiaraChickenScene::ChangeScene(const std::string& sceneName)
+void KiaraChickenScene::ChangeScene()
 {
-    game_->ChangeScene(sceneName);
+    changeScene_ = true;
 }
 
 void KiaraChickenScene::End()

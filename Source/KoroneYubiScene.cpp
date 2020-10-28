@@ -2,6 +2,7 @@
 #include "../Header/LP.h"
 #include "../Header/KoroneYubiHand.h"
 #include "../Header/KoroneYubiStream.h"
+#include "../Header/InaTransitionDoorOpen.h"
 
 KoroneYubiScene::KoroneYubiScene(Game* game) : game_{game}
 {}
@@ -26,6 +27,8 @@ void KoroneYubiScene::Init()
     text_ = LP::SetText("Korone's stream is starting,\npay the yubi tax!", sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraCenter().y - 64), 64);
     LP::SetTextOriginCenter(text_);
     LP::SetTextScale(text_, .2f, .2f);
+
+    AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
 }
 
 void KoroneYubiScene::Update(float delta_time)
@@ -46,9 +49,16 @@ void KoroneYubiScene::Update(float delta_time)
         }
     }
 
+    if (changeScene_)
+    {
+        changeScene_ = false;
+        game_->ChangeScene("InaTransition");
+    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
-        ChangeScene("InaTransition");
+        OnLoss();
+        game_->ChangeScene("InaTransition");
     }
 }
 
@@ -75,13 +85,14 @@ void KoroneYubiScene::OnWin()
 
 void KoroneYubiScene::OnLoss()
 {
+    if (game_->GetMiniGameManager()->GetWin()) return; //if already won the round don't null that win
     game_->GetMiniGameManager()->SetWin(false);
     game_->GetMiniGameManager()->DecrementHP();
 }
 
-void KoroneYubiScene::ChangeScene(const std::string& sceneName)
+void KoroneYubiScene::ChangeScene()
 {
-    game_->ChangeScene(sceneName);
+    changeScene_ = true;
 }
 
 void KoroneYubiScene::End()

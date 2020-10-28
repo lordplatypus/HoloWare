@@ -2,6 +2,7 @@
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 #include "../Header/InaTransitionDoor.h"
+#include "../Header/InaTransitionDoorOpen.h"
 #include "../Header/InaTransitionHP.h"
 #include "../Header/InaTransitionLoading.h"
 #include "../Header/InaTransitionTimer.h"
@@ -46,12 +47,9 @@ void InaTransitionScene::Init()
     for (int i = 0; i < hp; i++) 
         AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
 
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 3, 1.0f, this));
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 2, game_->GetCamera(), this));
 
-    AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 240, game_->GetCamera()->GetCameraTopEdge()), this));
-    AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraTopEdge()), 
-                              sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), this));
+    AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
 }
 
 void InaTransitionScene::Reset()
@@ -64,19 +62,13 @@ void InaTransitionScene::Update(float delta_time)
     gom_.Collision();
     gom_.Remove();
 
-    timer_ -= delta_time;
-    if (timer_ <= 0.0f)
+    if (changeScene_)
     {
+        changeScene_ = false;
         RandomMiniGame();
     }
-    else if (state_ != CloseDoor && timer_ <= 1.0f)
-    {
-        state_ = CloseDoor;
-        AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 240, game_->GetCamera()->GetCameraTopEdge()), 
-                                  sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), this));
-        AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), 
-                                  sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraTopEdge()), this));
-    }
+
+    timer_ -= delta_time;
     LP::SetTextString(timerText_, std::to_string(timer_));
 }
 
@@ -98,9 +90,9 @@ void InaTransitionScene::OnWin()
 void InaTransitionScene::OnLoss()
 {}
 
-void InaTransitionScene::ChangeScene(const std::string& sceneName)
+void InaTransitionScene::ChangeScene()
 {
-    game_->ChangeScene(sceneName);
+    changeScene_ = true;
 }
 
 void InaTransitionScene::End()
@@ -116,11 +108,11 @@ void InaTransitionScene::RandomMiniGame()
     switch (randMiniGame)
     {
     case 0:
-        ChangeScene("KiaraChicken");
+        game_->ChangeScene("KiaraChicken");
         break;
 
     case 1:
-        ChangeScene("KoroneYubi");
+        game_->ChangeScene("KoroneYubi");
         break;
     
     default:
