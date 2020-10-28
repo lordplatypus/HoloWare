@@ -5,6 +5,7 @@
 #include "LoadImage.h"
 #include "MusicPlayer.h"
 #include "Camera.h"
+#include "MiniGameManager.h"
 
 class Game
 {
@@ -20,9 +21,7 @@ public:
     void EndScene();
 
     //MiniGame Management
-    int GetMiniGameCount() const;
-    void SetWin(const bool win);
-    bool GetWin() const;
+    MiniGameManager* GetMiniGameManager();
 
     //Camera
     Camera* GetCamera();
@@ -42,6 +41,7 @@ private:
     Scene* scene_ {nullptr};
     LoadImage loadImage_;
     MusicPlayer musicPlayer_;
+    MiniGameManager miniGameManager_;
 
     bool win_{true};
 };

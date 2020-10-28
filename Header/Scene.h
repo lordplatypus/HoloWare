@@ -15,6 +15,7 @@ public:
     virtual void Draw() = 0;
     virtual void AddGameObject(GameObject* gameObject) = 0;
     virtual void OnWin() = 0;
+    virtual void OnLoss() = 0;
     virtual void ChangeScene(const std::string& sceneName) = 0;
     virtual void End() = 0;
 };

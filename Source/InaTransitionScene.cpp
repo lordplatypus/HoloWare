@@ -1,4 +1,4 @@
-#include "../Header/SceneMiniGame.h"
+#include "../Header/InaTransitionScene.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 #include "../Header/InaTransitionDoor.h"
@@ -6,25 +6,30 @@
 #include "../Header/InaTransitionLoading.h"
 #include "../Header/InaTransitionTimer.h"
 
-SceneMiniGame::SceneMiniGame(Game* game) : game_{game}
+InaTransitionScene::InaTransitionScene(Game* game) : game_{game}
 {}
 
-SceneMiniGame::~SceneMiniGame()
+InaTransitionScene::~InaTransitionScene()
 {}
 
-void SceneMiniGame::Init()
+void InaTransitionScene::Init()
 {//Occurs everytime the scene is loaded
-    state_ = First;
-
-    if (game_->GetWin())
+    if (game_->GetMiniGameManager()->GetPlayCount() % 10 == 0)
+    {
+        state_ = DifficultyUp;
+        if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) return;
+        else game_->GetMiniGameManager()->SetDifficulty(game_->GetMiniGameManager()->GetDifficulty() + 1);
+    }
+    else if (game_->GetMiniGameManager()->GetWin())
     {//win
-
+        state_ = WinState;
     }
     else
     {//lose
-        hp_--;
+        state_ = LossState;
     }
-    game_->SetWin(false); //reset win for next game
+    game_->GetMiniGameManager()->IncrementPlayCount();
+    game_->GetMiniGameManager()->SetWin(false); //reset win for next game
 
     game_->GetCamera()->SetCameraViewSize(480, 270);
     game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
@@ -37,8 +42,9 @@ void SceneMiniGame::Init()
     timerText_ = LP::SetText(std::to_string(timer_), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 32);
     LP::SetTextOriginCenter(timerText_);
 
-    for (int i = 0; i < hp_; i++) 
-        AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp_) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
+    int hp = game_->GetMiniGameManager()->GetHP();
+    for (int i = 0; i < hp; i++) 
+        AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
 
     AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 3, 1.0f, this));
 
@@ -48,12 +54,11 @@ void SceneMiniGame::Init()
                               sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), this));
 }
 
-void SceneMiniGame::Reset()
+void InaTransitionScene::Reset()
 {//Occurs only when called (intended to be called if game is lost/quit)
-    hp_ = 4;
 }
 
-void SceneMiniGame::Update(float delta_time)
+void InaTransitionScene::Update(float delta_time)
 {
     gom_.Update(delta_time);
     gom_.Collision();
@@ -64,9 +69,9 @@ void SceneMiniGame::Update(float delta_time)
     {
         RandomMiniGame();
     }
-    else if (state_ == First && timer_ <= 1.0f)
+    else if (state_ != CloseDoor && timer_ <= 1.0f)
     {
-        state_ = Second;
+        state_ = CloseDoor;
         AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge() - 240, game_->GetCamera()->GetCameraTopEdge()), 
                                   sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), this));
         AddGameObject(new InaTransitionDoor(sf::Vector2f(game_->GetCamera()->GetCameraRightEdge(), game_->GetCamera()->GetCameraTopEdge()), 
@@ -75,36 +80,39 @@ void SceneMiniGame::Update(float delta_time)
     LP::SetTextString(timerText_, std::to_string(timer_));
 }
 
-void SceneMiniGame::Draw()
+void InaTransitionScene::Draw()
 {
     LP::DrawSprite(background_);
     LP::DrawText(timerText_);
     gom_.Draw();
 }
 
-void SceneMiniGame::AddGameObject(GameObject* gameObject)
+void InaTransitionScene::AddGameObject(GameObject* gameObject)
 {
     gom_.Add(gameObject);
 }
 
-void SceneMiniGame::OnWin()
+void InaTransitionScene::OnWin()
 {}
 
-void SceneMiniGame::ChangeScene(const std::string& sceneName)
+void InaTransitionScene::OnLoss()
+{}
+
+void InaTransitionScene::ChangeScene(const std::string& sceneName)
 {
     game_->ChangeScene(sceneName);
 }
 
-void SceneMiniGame::End()
+void InaTransitionScene::End()
 {
     gom_.Clear();
     LP::DeleteText(timerText_);
     LP::DeleteSprite(background_);
 }
 
-void SceneMiniGame::RandomMiniGame()
+void InaTransitionScene::RandomMiniGame()
 {
-    int randMiniGame = rand() % game_->GetMiniGameCount();
+    int randMiniGame = rand() % 2;
     switch (randMiniGame)
     {
     case 0:

@@ -10,6 +10,8 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
+    game_->GetMiniGameManager()->Reset();
+
     titleText_ = LP::SetText("HoloWare", game_->GetCamera()->GetCameraCenter(), 128);
     LP::SetTextOriginCenter(titleText_);
 }
@@ -22,7 +24,7 @@ void SceneTitle::Update(float delta_time)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
     {
-        ChangeScene("MiniGame");
+        ChangeScene("InaTransition");
     }
 }
 
@@ -38,6 +40,9 @@ void SceneTitle::AddGameObject(GameObject* gameObject)
 }
 
 void SceneTitle::OnWin()
+{}
+
+void SceneTitle::OnLoss()
 {}
 
 void SceneTitle::ChangeScene(const std::string& sceneName)

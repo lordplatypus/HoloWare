@@ -10,6 +10,7 @@ enum //Images
     ina_transition_timer_end_image,
     ina_transition_timer_segment_image,
     ina_transition_timer_bomb_image,
+    transition_explosion_image,
     kiara_chicken_kiara_image,
     kiara_chicken_background_image,
     kiara_chicken_chicken_image,

@@ -4,7 +4,7 @@
 #include "../Header/ID.h"
 #include "../Header/SceneNull.h"
 #include "../Header/SceneTitle.h"
-#include "../Header/SceneMiniGame.h"
+#include "../Header/InaTransitionScene.h"
 #include "../Header/KiaraChickenScene.h"
 #include "../Header/KoroneYubiScene.h"
 
@@ -15,7 +15,7 @@ Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
     loadImage_.Load();
 
     AddScene("Title", new SceneTitle(this));
-    AddScene("MiniGame", new SceneMiniGame(this));
+    AddScene("InaTransition", new InaTransitionScene(this));
     AddScene("KiaraChicken", new KiaraChickenScene(this));
     AddScene("KoroneYubi", new KoroneYubiScene(this));
 
@@ -56,19 +56,9 @@ void Game::EndScene()
     scene_ = &nullScene;
 }
 
-int Game::GetMiniGameCount() const
+MiniGameManager* Game::GetMiniGameManager()
 {
-    return scenes_.size() - 2;
-}
-
-void Game::SetWin(const bool win)
-{
-    win_ = win;
-}
-
-bool Game::GetWin() const
-{
-    return win_;
+    return &miniGameManager_;
 }
 
 Camera* Game::GetCamera()

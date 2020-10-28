@@ -48,7 +48,7 @@ void KoroneYubiScene::Update(float delta_time)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
-        ChangeScene("MiniGame");
+        ChangeScene("InaTransition");
     }
 }
 
@@ -70,6 +70,13 @@ void KoroneYubiScene::OnWin()
         gom_.Find(i)->Kill();
     }
     AddGameObject(new KoroneYubiStream(sf::Vector2f(0.0f, 0.0f), this));
+    game_->GetMiniGameManager()->SetWin(true);
+}
+
+void KoroneYubiScene::OnLoss()
+{
+    game_->GetMiniGameManager()->SetWin(false);
+    game_->GetMiniGameManager()->DecrementHP();
 }
 
 void KoroneYubiScene::ChangeScene(const std::string& sceneName)

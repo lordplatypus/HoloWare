@@ -11,8 +11,8 @@ find_package(SFML 2.4 COMPONENTS graphics window system audio REQUIRED)
 
 # list .cpp files
 set(SOURCES main.cpp LP.cpp Game.cpp SceneTitle.cpp LoadImage.cpp GameObject.cpp GameObjectManager.cpp KiaraChickenKiara.cpp KiaraChickenSpawner.cpp 
-KiaraChickenChicken.cpp Score.cpp Points.cpp MusicPlayer.cpp KiaraChickenScene.cpp SceneMiniGame.cpp Camera.cpp Math.cpp InaTransitionDoor.cpp InaTransitionHP.cpp 
-InaTransitionLoading.cpp InaTransitionTimer.cpp KoroneYubiScene.cpp KoroneYubiHand.cpp KoroneYubiManager.cpp KoroneYubiStream.cpp)
+KiaraChickenChicken.cpp Score.cpp Points.cpp MusicPlayer.cpp KiaraChickenScene.cpp InaTransitionScene.cpp Camera.cpp Math.cpp InaTransitionDoor.cpp InaTransitionHP.cpp 
+InaTransitionLoading.cpp InaTransitionTimer.cpp KoroneYubiScene.cpp KoroneYubiHand.cpp KoroneYubiManager.cpp KoroneYubiStream.cpp MiniGameManager.cpp)
 
 # add the executable
 add_executable(HoloWare ${SOURCES}) 

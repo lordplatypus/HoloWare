@@ -1,20 +1,21 @@
-#ifndef SCENE_MINI_GAME_H_
-#define SCENE_MINI_GAME_H_
+#ifndef INA_TRANSITION_SCENE_H_
+#define INA_TRANSITION_SCENE_H_
 #include "Scene.h"
 #include "Game.h"
 #include "GameObjectManager.h"
 
-class SceneMiniGame : public Scene
+class InaTransitionScene : public Scene
 {
 public:
-    SceneMiniGame(Game* game);
-    ~SceneMiniGame();
+    InaTransitionScene(Game* game);
+    ~InaTransitionScene();
     virtual void Init() override;
     void Reset();
     virtual void Update(float delta_time) override;
     virtual void Draw() override;
     virtual void AddGameObject(GameObject* gameObject) override;
     virtual void OnWin() override;
+    virtual void OnLoss() override;
     virtual void ChangeScene(const std::string& sceneName) override;
     virtual void End() override;
 
@@ -33,18 +34,18 @@ private:
     int timerText_{0};
 
     //Variables
-    int hp_{4};
     float timer_{0.0f};
     sf::Vector2f velocity_{10.0f, 0.0f};
 
     //States
     enum State
     {
-        First,
-        Second,
-        Third
+        WinState,
+        LossState,
+        DifficultyUp,
+        CloseDoor,
     };
-    State state_{First};
+    State state_{WinState};
 };
 
 #endif

@@ -35,7 +35,7 @@ void KiaraChickenScene::Update(float delta_time)
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
     {
-        ChangeScene("MiniGame");
+        ChangeScene("InaTransition");
     }
 }
 
@@ -52,7 +52,13 @@ void KiaraChickenScene::AddGameObject(GameObject* gameObject)
 
 void KiaraChickenScene::OnWin()
 {
-    game_->SetWin(true);
+    game_->GetMiniGameManager()->SetWin(true);
+}
+
+void KiaraChickenScene::OnLoss()
+{
+    game_->GetMiniGameManager()->SetWin(false);
+    game_->GetMiniGameManager()->DecrementHP();
 }
 
 void KiaraChickenScene::ChangeScene(const std::string& sceneName)
