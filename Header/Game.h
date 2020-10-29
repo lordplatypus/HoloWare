@@ -2,8 +2,7 @@
 #define GAME_H_
 #include <unordered_map>
 #include "Scene.h"
-#include "LoadImage.h"
-#include "MusicPlayer.h"
+#include "LoadAssets.h"
 #include "Camera.h"
 #include "MiniGameManager.h"
 
@@ -26,9 +25,6 @@ public:
     //Camera
     Camera* GetCamera();
 
-    //Music and Sound Effects
-    void PlayMusic(const int musicID, const bool loop);
-
     //Deletes pointers and whatnot at game close
     void Clear();
 
@@ -39,8 +35,7 @@ private:
     Camera* camera_{nullptr};
     std::unordered_map<std::string, Scene*> scenes_;
     Scene* scene_ {nullptr};
-    LoadImage loadImage_;
-    MusicPlayer musicPlayer_;
+    LoadAssets loadAssets_;
     MiniGameManager miniGameManager_;
 
     bool win_{true};

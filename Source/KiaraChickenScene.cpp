@@ -1,5 +1,6 @@
 #include "../Header/KiaraChickenScene.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 #include "../Header/ID.h"
 #include "../Header/KiaraChickenKiara.h"
 #include "../Header/KiaraChickenSpawner.h"
@@ -20,7 +21,7 @@ void KiaraChickenScene::Init()
     background_ = LP::SetSprite(kiara_chicken_background_image);
     gom_.Add(new KiaraChickenKiara(sf::Vector2f(0.0f, 30.0f), this));
     gom_.Add(new KiaraChickenSpawner(this));
-    game_->PlayMusic(kiara_theme, true);
+    MP::PlayMusic(kiara_theme);
 
     int sec = 0;
     if (game_->GetMiniGameManager()->GetDifficulty() == easy_difficulty) sec = 10;
@@ -83,4 +84,5 @@ void KiaraChickenScene::End()
 {
     LP::DeleteSprite(background_);
     gom_.Clear();
+    MP::StopMusic(kiara_theme);
 }

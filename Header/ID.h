@@ -28,6 +28,11 @@ enum //Music
     kiara_theme
 };
 
+enum //Sound Effects
+{
+    pop_se
+};
+
 enum //Difficulty
 {
     easy_difficulty,

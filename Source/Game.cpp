@@ -13,7 +13,7 @@ static SceneNull nullScene;
 Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 {
     srand(time(NULL)); //random seed
-    loadImage_.Load();
+    loadAssets_.Load();
 
     AddScene("Title", new SceneTitle(this));
     AddScene("InaTransition", new InaTransitionScene(this));
@@ -65,11 +65,6 @@ MiniGameManager* Game::GetMiniGameManager()
 Camera* Game::GetCamera()
 {
     return camera_;
-}
-
-void Game::PlayMusic(const int musicID, const bool loop)
-{
-    musicPlayer_.PlayMusic(musicID, loop);
 }
 
 void Game::Clear()

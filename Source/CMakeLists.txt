@@ -10,8 +10,8 @@ set(CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules")
 find_package(SFML 2.4 COMPONENTS graphics window system audio REQUIRED)
 
 # list .cpp files
-set(SOURCES main.cpp LP.cpp Game.cpp SceneTitle.cpp LoadImage.cpp GameObject.cpp GameObjectManager.cpp KiaraChickenKiara.cpp KiaraChickenSpawner.cpp 
-KiaraChickenChicken.cpp Score.cpp Points.cpp MusicPlayer.cpp KiaraChickenScene.cpp InaTransitionScene.cpp Camera.cpp Math.cpp InaTransitionDoor.cpp InaTransitionDoorOpen.cpp 
+set(SOURCES main.cpp LP.cpp MP.cpp Game.cpp SceneTitle.cpp LoadAssets.cpp GameObject.cpp GameObjectManager.cpp KiaraChickenKiara.cpp KiaraChickenSpawner.cpp 
+KiaraChickenChicken.cpp Score.cpp Points.cpp KiaraChickenScene.cpp InaTransitionScene.cpp Camera.cpp Math.cpp InaTransitionDoor.cpp InaTransitionDoorOpen.cpp 
 InaTransitionDoorClose.cpp InaTransitionHP.cpp InaTransitionLoading.cpp InaTransitionTimer.cpp KoroneYubiScene.cpp KoroneYubiHand.cpp KoroneYubiManager.cpp 
 KoroneYubiStream.cpp MiniGameManager.cpp)
 

@@ -1,18 +1,23 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "../Header/LoadImage.h"
+#include "../Header/LoadAssets.h"
 #include "../Header/ID.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 
-LoadImage::LoadImage()
+LoadAssets::LoadAssets()
 {}
 
-LoadImage::~LoadImage()
+LoadAssets::~LoadAssets()
+{}
+
+void LoadAssets::Load()
 {
-    
+    LoadImage();
+    LoadSound();
 }
 
-void LoadImage::Load()
+void LoadAssets::LoadImage()
 {
     LP::SetFont("./Resource/Kiara/Blue Sky 8x8.ttf");
     LP::SetTexture(ina_transition_hp_image, "./Resource/Transition/Ina/Tako.png", 256, 64);
@@ -33,4 +38,10 @@ void LoadImage::Load()
     LP::SetTexture(korone_yubi_laugh1_image, "./Resource/Korone/Korone_Laugh1.png", 16, 28);
     LP::SetTexture(korone_yubi_laugh2_image, "./Resource/Korone/Korone_Laugh2.png", 31, 22);
     LP::SetTexture(korone_yubi_chat_image, "./Resource/Korone/Korone_Chat.png", 525, 44);
+}
+
+void LoadAssets::LoadSound()
+{
+    MP::SetMusic(kiara_theme, "./Resource/Kiara/Kiara_Loading_Song.ogg");
+    MP::SetSound(pop_se, "./Resource/Korone/pop.ogg");
 }

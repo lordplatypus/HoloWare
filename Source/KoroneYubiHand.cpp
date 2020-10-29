@@ -1,5 +1,6 @@
 #include "../Header/KoroneYubiHand.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 #include "../Header/ID.h"
 
 KoroneYubiHand::KoroneYubiHand(sf::Vector2f position, int ID, KoroneYubiManager* kym, Scene* scene)
@@ -44,6 +45,7 @@ void KoroneYubiHand::InputHandle()
             kym_->SetActiveHand(ID_+1);
         }
         spacePressed_ = true;
+        MP::PlaySound(pop_se);
     }
 
     if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) spacePressed_ = false;
