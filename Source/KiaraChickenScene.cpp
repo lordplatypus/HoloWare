@@ -4,6 +4,7 @@
 #include "../Header/KiaraChickenKiara.h"
 #include "../Header/KiaraChickenSpawner.h"
 #include "../Header/InaTransitionDoorOpen.h"
+#include "../Header/InaTransitionTimer.h"
 
 KiaraChickenScene::KiaraChickenScene(Game* game) : game_{game}
 {}
@@ -21,6 +22,12 @@ void KiaraChickenScene::Init()
     gom_.Add(new KiaraChickenSpawner(this));
     game_->PlayMusic(kiara_theme, true);
 
+    int sec = 0;
+    if (game_->GetMiniGameManager()->GetDifficulty() == easy_difficulty) sec = 10;
+    else if (game_->GetMiniGameManager()->GetDifficulty() == medium_difficulty) sec = 7;
+    else if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) sec = 4;
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64 * 4), sec, game_->GetCamera(), this, 4.0f));
+
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this, 4.0f));
 }
 
@@ -33,6 +40,7 @@ void KiaraChickenScene::Update(float delta_time)
     if (changeScene_)
     {
         changeScene_ = false;
+        OnLoss();
         game_->ChangeScene("InaTransition");
     }
 

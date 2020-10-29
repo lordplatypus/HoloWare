@@ -12,6 +12,7 @@ static SceneNull nullScene;
 
 Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 {
+    srand(time(NULL)); //random seed
     loadImage_.Load();
 
     AddScene("Title", new SceneTitle(this));

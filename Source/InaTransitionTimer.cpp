@@ -14,13 +14,17 @@ InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, int sec, Camera* c
     scale_= scale;
 
     end_ = LP::SetSprite(ina_transition_timer_end_image, position_);
+    LP::SetSpriteScale(end_, scale_, scale_);
     for (int i = 0; i < sec_; i++)
     {
-        segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + 64 + 128 * i, position_.y)));
+        segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + (64 * scale_) + (128 * scale_) * i, position_.y)));
+        LP::SetSpriteScale(segments_[i], scale_, scale_);
     }
-    bomb_ = LP::SetSprite(ina_transition_timer_bomb_image, sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
-    explosion_ = LP::SetSprite(transition_explosion_image, sf::Vector2f(position_.x + 32, position_.y + 32));
+    bomb_ = LP::SetSprite(ina_transition_timer_bomb_image, sf::Vector2f(position_.x + (64 * scale_) + (128 * scale_) * segments_.size(), position_.y));
+    LP::SetSpriteScale(bomb_, scale_, scale_);
+    explosion_ = LP::SetSprite(transition_explosion_image, sf::Vector2f(position_.x + 32 * scale_, position_.y + 32 * scale_));
     LP::SetSpriteOriginCenter(explosion_);
+    LP::SetSpriteScale(explosion_, scale_, scale_);
 }
 
 InaTransitionTimer::~InaTransitionTimer()
@@ -47,11 +51,7 @@ void InaTransitionTimer::Update(float delta_time)
             Kill();
             scene_->AddGameObject(new InaTransitionDoorClose(camera_, scene_, scale_));
         }
-        else 
-        {
-            deathSequence_ = true;
-            scene_->OnLoss();
-        }
+        else deathSequence_ = true;
     }
 }
 
@@ -59,6 +59,6 @@ void InaTransitionTimer::Draw()
 {
     LP::DrawSprite(end_);
     for (auto segment : segments_) LP::DrawSprite(segment);
-    if (!deathSequence_) LP::DrawSprite(bomb_, sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
+    if (!deathSequence_) LP::DrawSprite(bomb_, sf::Vector2f(position_.x + (64 * scale_) + (128 * scale_) * segments_.size(), position_.y));
     if (deathSequence_) LP::DrawSprite(explosion_);
 }

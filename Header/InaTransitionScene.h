@@ -32,6 +32,7 @@ private:
 
     //Text
     int timerText_{0};
+    int miniGameCountText_{0};
 
     //Variables
     float timer_{0.0f};
@@ -43,7 +44,6 @@ private:
         WinState,
         LossState,
         DifficultyUp,
-        CloseDoor,
     };
     State state_{WinState};
 

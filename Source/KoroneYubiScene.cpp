@@ -3,6 +3,7 @@
 #include "../Header/KoroneYubiHand.h"
 #include "../Header/KoroneYubiStream.h"
 #include "../Header/InaTransitionDoorOpen.h"
+#include "../Header/InaTransitionTimer.h"
 
 KoroneYubiScene::KoroneYubiScene(Game* game) : game_{game}
 {}
@@ -17,6 +18,7 @@ void KoroneYubiScene::Init()
     game_->GetCamera()->SetCameraViewSize(480, 270);
     game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
 
+    difficulty_ = game_->GetMiniGameManager()->GetDifficulty();
     for (int i = 0; i <= difficulty_; i++)
     {
         AddGameObject(new KoroneYubiHand(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x - (136 * difficulty_)/2 - 68 + 136 * i, game_->GetCamera()->GetCameraBottomEdge() - 64*2), i, kym_, this));
@@ -27,6 +29,8 @@ void KoroneYubiScene::Init()
     text_ = LP::SetText("Korone's stream is starting,\npay the yubi tax!", sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraCenter().y - 64), 64);
     LP::SetTextOriginCenter(text_);
     LP::SetTextScale(text_, .2f, .2f);
+
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 2, game_->GetCamera(), this));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
 }
@@ -52,6 +56,7 @@ void KoroneYubiScene::Update(float delta_time)
     if (changeScene_)
     {
         changeScene_ = false;
+        OnLoss();
         game_->ChangeScene("InaTransition");
     }
 

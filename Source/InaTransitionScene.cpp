@@ -15,7 +15,8 @@ InaTransitionScene::~InaTransitionScene()
 
 void InaTransitionScene::Init()
 {//Occurs everytime the scene is loaded
-    if (game_->GetMiniGameManager()->GetPlayCount() % 10 == 0)
+    game_->GetMiniGameManager()->IncrementPlayCount();
+    if (game_->GetMiniGameManager()->GetPlayCount() % 10 == 0 && game_->GetMiniGameManager()->GetPlayCount() != 0)
     {
         state_ = DifficultyUp;
         if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) return;
@@ -29,7 +30,6 @@ void InaTransitionScene::Init()
     {//lose
         state_ = LossState;
     }
-    game_->GetMiniGameManager()->IncrementPlayCount();
     game_->GetMiniGameManager()->SetWin(false); //reset win for next game
 
     game_->GetCamera()->SetCameraViewSize(480, 270);
@@ -42,6 +42,7 @@ void InaTransitionScene::Init()
     timer_ = 5.0f;
     timerText_ = LP::SetText(std::to_string(timer_), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 32);
     LP::SetTextOriginCenter(timerText_);
+    miniGameCountText_ = LP::SetText(std::to_string(game_->GetMiniGameManager()->GetPlayCount()), sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 32);
 
     int hp = game_->GetMiniGameManager()->GetHP();
     for (int i = 0; i < hp; i++) 
@@ -53,8 +54,7 @@ void InaTransitionScene::Init()
 }
 
 void InaTransitionScene::Reset()
-{//Occurs only when called (intended to be called if game is lost/quit)
-}
+{}
 
 void InaTransitionScene::Update(float delta_time)
 {
@@ -76,6 +76,7 @@ void InaTransitionScene::Draw()
 {
     LP::DrawSprite(background_);
     LP::DrawText(timerText_);
+    LP::DrawText(miniGameCountText_);
     gom_.Draw();
 }
 
@@ -99,6 +100,7 @@ void InaTransitionScene::End()
 {
     gom_.Clear();
     LP::DeleteText(timerText_);
+    LP::DeleteText(miniGameCountText_);
     LP::DeleteSprite(background_);
 }
 
