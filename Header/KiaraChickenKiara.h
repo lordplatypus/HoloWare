@@ -1,7 +1,7 @@
 #ifndef KIARA_CHICKEN_KIARA_H_
 #define KIARA_CHICKEN_KIARA_H_
 #include "GameObject.h"
-#include "Score.h"
+#include "KiaraChickenScore.h"
 
 class KiaraChickenKiara : public GameObject
 {
@@ -26,7 +26,7 @@ private:
     float timer_{0.0f};
 
     //Score
-    Score* score_{nullptr};
+    KiaraChickenScore* score_{nullptr};
 };
 
 #endif

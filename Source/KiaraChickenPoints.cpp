@@ -1,23 +1,23 @@
-#include "../Header/Points.h"
+#include "../Header/KiaraChickenPoints.h"
 #include "../Header/LP.h"
 
-Points::Points(sf::Vector2f position, Scene* scene)
+KiaraChickenPoints::KiaraChickenPoints(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
-    tag_ = "Points";
-    name_ = "Points";
+    tag_ = "KiaraChickenPoints";
+    name_ = "KiaraChickenPoints";
     position_ = position;
     velocity_ = sf::Vector2f(2000.0f, 2000.0f);
 
     text_ = LP::SetText("+" + std::to_string(100), position_, 64);
 }
 
-Points::~Points()
+KiaraChickenPoints::~KiaraChickenPoints()
 {
     LP::DeleteText(text_);
 }
 
-void Points::Update(float delta_time)
+void KiaraChickenPoints::Update(float delta_time)
 {
     if (position_.y < 1080 - 50 - 64) position_.y += velocity_.y * delta_time;
     else
@@ -36,7 +36,7 @@ void Points::Update(float delta_time)
     LP::SetTextPosition(text_, position_);
 }
 
-void Points::Draw()
+void KiaraChickenPoints::Draw()
 {
     LP::DrawText(text_);
 }

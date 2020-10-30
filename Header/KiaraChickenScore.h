@@ -1,12 +1,12 @@
-#ifndef SCORE_H_
-#define SCORE_H_
+#ifndef KIARA_CHICKEN_SCORE_H_
+#define KIARA_CHICKEN_SCORE_H_
 #include <SFML/Graphics.hpp>
 
-class Score
+class KiaraChickenScore
 {
 public:
-    Score(sf::Vector2f position);
-    ~Score();
+    KiaraChickenScore(sf::Vector2f position);
+    ~KiaraChickenScore();
     void Draw();
     void AddToScore(const int score);
 

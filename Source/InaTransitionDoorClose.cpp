@@ -1,5 +1,6 @@
 #include "../Header/InaTransitionDoorClose.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 #include "../Header/ID.h"
 
 InaTransitionDoorClose::InaTransitionDoorClose(Camera* camera, Scene* scene, float scale)
@@ -20,6 +21,8 @@ InaTransitionDoorClose::InaTransitionDoorClose(Camera* camera, Scene* scene, flo
     LP::SetSpriteScale(spriteRight_, scale_, scale_);
     spriteLeft_ = LP::SetSprite(ina_transition_door_image, positionLeft_);
     LP::SetSpriteScale(spriteLeft_, scale_, scale_);
+
+    MP::PlaySound(whoosh_se);
 }
 
 InaTransitionDoorClose::~InaTransitionDoorClose()
@@ -32,6 +35,12 @@ void InaTransitionDoorClose::Update(float delta_time)
 {
     if (positionRight_ != endPositionRight_) positionRight_ = math_.Lerp(positionRight_, endPositionRight_, 10 * scale_ * delta_time);
     if (positionLeft_ != endPositionLeft_) positionLeft_ = math_.Lerp(positionLeft_, endPositionLeft_, 10 * scale_ * delta_time);
+
+    if (!thud_ && positionRight_.x < endPositionRight_.x + .3f) 
+    {
+        MP::PlaySound(thud_se);
+        thud_ = true;
+    }
 
     timer_ -= delta_time;
     if (timer_ <= 0.0f) scene_->ChangeScene();

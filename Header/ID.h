@@ -30,7 +30,10 @@ enum //Music
 
 enum //Sound Effects
 {
-    pop_se
+    pop_se,
+    squeek_se,
+    whoosh_se,
+    thud_se
 };
 
 enum //Difficulty

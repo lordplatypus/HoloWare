@@ -1,5 +1,6 @@
 #include "../Header/InaTransitionDoorOpen.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 #include "../Header/ID.h"
 
 InaTransitionDoorOpen::InaTransitionDoorOpen(Camera* camera, Scene* scene, float scale)
@@ -20,6 +21,8 @@ InaTransitionDoorOpen::InaTransitionDoorOpen(Camera* camera, Scene* scene, float
     LP::SetSpriteScale(spriteRight_, scale_, scale_);
     spriteLeft_ = LP::SetSprite(ina_transition_door_image, positionLeft_);
     LP::SetSpriteScale(spriteLeft_, scale_, scale_);
+
+    MP::PlaySound(whoosh_se);
 }
 
 InaTransitionDoorOpen::~InaTransitionDoorOpen()

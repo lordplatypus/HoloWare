@@ -44,4 +44,7 @@ void LoadAssets::LoadSound()
 {
     MP::SetMusic(kiara_theme, "./Resource/Kiara/Kiara_Loading_Song.ogg");
     MP::SetSound(pop_se, "./Resource/Korone/pop.ogg");
+    MP::SetSound(squeek_se, "./Resource/Korone/squeek.wav");
+    MP::SetSound(whoosh_se, "./Resource/Transition/door_movement.wav");
+    MP::SetSound(thud_se, "./Resource/Transition/door_impact.wav");
 }

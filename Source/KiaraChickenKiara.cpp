@@ -1,7 +1,7 @@
 #include "../Header/KiaraChickenKiara.h"
 #include "../Header/LP.h"
 #include "../Header/ID.h"
-#include "../Header/Points.h"
+#include "../Header/KiaraChickenPoints.h"
 
 KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
 {
@@ -20,7 +20,7 @@ KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
     playerSprite_ = LP::SetSprite(kiara_chicken_kiara_image, 1142 / 2, 1043, 2, 1);
     shadowSprite_ = LP::SetSprite(kiara_chicken_shadow_image, sf::Vector2f(position_.x, position_.y + imageHeight_));
 
-    score_ = new Score(sf::Vector2f(50.0f, 50.0f));
+    score_ = new KiaraChickenScore(sf::Vector2f(50.0f, 50.0f));
 }
 
 KiaraChickenKiara::~KiaraChickenKiara()
@@ -48,7 +48,7 @@ void KiaraChickenKiara::ReactOnCollision(GameObject& other)
     if (other.GetTag() == "Chicken")
     {
         score_->AddToScore(100);
-        scene_->AddGameObject(new Points(sf::Vector2f(1920 - 300, 0), scene_));
+        scene_->AddGameObject(new KiaraChickenPoints(sf::Vector2f(1920 - 300, 0), scene_));
     }
 }
 

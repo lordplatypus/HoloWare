@@ -23,6 +23,7 @@ private:
     int spriteRight_{0};
     int spriteLeft_{0};
     float timer_{1.0f};
+    bool thud_{false};
 };
 
 #endif
