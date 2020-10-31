@@ -45,6 +45,11 @@ void MP::LoopMusic(const int key, const bool loop)
     musicMap_[key].setLoop(loop);
 }
 
+void MP::SetMusicSpeed(const int key, const float speed)
+{
+    musicMap_[key].setPitch(speed);
+}
+
 void MP::RemoveMusic(const int key)
 {
     if (musicMap_[key].getStatus() == musicMap_[key].Playing) StopMusic(key);
@@ -89,6 +94,11 @@ void MP::StopSound(const int key)
 void MP::LoopSound(const int key, const bool loop)
 {
     soundMap_[key].setLoop(loop);
+}
+
+void MP::SetSoundSpeed(const int key, const float speed)
+{
+    soundMap_[key].setPitch(speed);
 }
 
 void MP::RemoveSound(const int key)

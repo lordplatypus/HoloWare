@@ -23,10 +23,11 @@ void KiaraChickenScene::Init()
     gom_.Add(new KiaraChickenSpawner(this));
     MP::PlayMusic(kiara_theme);
 
-    int sec = 0;
-    if (game_->GetMiniGameManager()->GetDifficulty() == easy_difficulty) sec = 10;
-    else if (game_->GetMiniGameManager()->GetDifficulty() == medium_difficulty) sec = 7;
-    else if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) sec = 4;
+    float sec = 0.0f;
+    if (game_->GetMiniGameManager()->GetDifficulty() == easy_difficulty) sec = 10.0f;
+    else if (game_->GetMiniGameManager()->GetDifficulty() == medium_difficulty) sec = 7.0f;
+    else if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) sec = 4.0f;
+    sec -= game_->GetMiniGameManager()->GetTimerModifier();
     AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64 * 4), sec, game_->GetCamera(), this, 4.0f));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this, 4.0f));

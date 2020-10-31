@@ -2,8 +2,9 @@
 #include "../Header/LP.h"
 #include "../Header/ID.h"
 #include "../Header/InaTransitionDoorClose.h"
+#include <cmath>
 
-InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, int sec, Camera* camera, Scene* scene, float scale)
+InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, float sec, Camera* camera, Scene* scene, float scale)
 {
     scene_ = scene;
     camera_ = camera;
@@ -11,11 +12,12 @@ InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, int sec, Camera* c
     name_ = "InaTimer";
     position_ = position;
     sec_ = sec;
+    if (sec_ - floor(sec_) > 0.0f) timer_ = sec_ - floor(sec_);
     scale_= scale;
 
     end_ = LP::SetSprite(ina_transition_timer_end_image, position_);
     LP::SetSpriteScale(end_, scale_, scale_);
-    for (int i = 0; i < sec_; i++)
+    for (int i = 0; i < ceil(sec_); i++)
     {
         segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + (64 * scale_) + (128 * scale_) * i, position_.y)));
         LP::SetSpriteScale(segments_[i], scale_, scale_);

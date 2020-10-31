@@ -14,6 +14,7 @@ public:
     static void PauseMusic(const int key);
     static void StopMusic(const int key);
     static void LoopMusic(const int key, const bool loop);
+    static void SetMusicSpeed(const int key, const float speed);
     static void RemoveMusic(const int key);
     static void ClearMusic();
 
@@ -24,6 +25,7 @@ public:
     static void PauseSound(const int key);
     static void StopSound(const int key);
     static void LoopSound(const int key, const bool loop);
+    static void SetSoundSpeed(const int key, const float speed);
     static void RemoveSound(const int key);
     static void ClearSound();
 };

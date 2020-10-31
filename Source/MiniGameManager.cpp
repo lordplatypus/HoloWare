@@ -3,10 +3,12 @@
 
 MiniGameManager::MiniGameManager()
 {
-    SetDifficulty(easy_difficulty);
-    SetWin(false);
-    SetPlayCount(0);
-    SetHP(4);
+    // SetDifficulty(easy_difficulty);
+    // SetWin(false);
+    // SetPlayCount(0);
+    // SetHP(4);
+    // SetTimerModifier(0.0f);
+    Reset();
 }
 
 MiniGameManager::~MiniGameManager()
@@ -62,10 +64,21 @@ void MiniGameManager::DecrementHP()
     HP_--;
 }
 
+void MiniGameManager::SetTimerModifier(const float modifier)
+{
+    timerModifier_ = modifier;
+}
+
+float MiniGameManager::GetTimerModifier() const
+{
+    return timerModifier_;
+}
+
 void MiniGameManager::Reset()
 {
     SetDifficulty(easy_difficulty);
     SetWin(false);
     SetPlayCount(0);
     SetHP(4);
+    SetTimerModifier(0.0f);
 }

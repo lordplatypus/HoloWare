@@ -16,6 +16,8 @@ public:
     void SetHP(const int HP);
     void DecrementHP();
     int GetHP() const;
+    void SetTimerModifier(const float modifier);
+    float GetTimerModifier() const;
 
     void Reset();
 
@@ -24,6 +26,7 @@ private:
     bool win_{false};
     int playCount_{0};
     int HP_{0};
+    float timerModifier_{0.0f};
 };
 
 #endif

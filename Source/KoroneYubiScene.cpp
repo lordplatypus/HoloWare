@@ -30,7 +30,8 @@ void KoroneYubiScene::Init()
     LP::SetTextOriginCenter(text_);
     LP::SetTextScale(text_, .2f, .2f);
 
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 2, game_->GetCamera(), this));
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 
+                                         2.0f - game_->GetMiniGameManager()->GetTimerModifier(), game_->GetCamera(), this));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
 }

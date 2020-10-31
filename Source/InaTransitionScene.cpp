@@ -25,6 +25,7 @@ void InaTransitionScene::Init()
     else if (game_->GetMiniGameManager()->GetWin())
     {//win
         state_ = WinState;
+        game_->GetMiniGameManager()->SetTimerModifier(game_->GetMiniGameManager()->GetTimerModifier() + 0.1f);
     }
     else
     {//lose
@@ -39,8 +40,8 @@ void InaTransitionScene::Init()
 
     AddGameObject(new InaTransitionLoading(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x - 160, game_->GetCamera()->GetCameraTopEdge() + 64), this));
 
-    timer_ = 5.0f;
-    timerText_ = LP::SetText(std::to_string(timer_), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 32);
+    timer_ = 5.0f - game_->GetMiniGameManager()->GetTimerModifier();
+    timerText_ = LP::SetText(std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager()->GetTimerModifier()), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 16);
     LP::SetTextOriginCenter(timerText_);
     miniGameCountText_ = LP::SetText(std::to_string(game_->GetMiniGameManager()->GetPlayCount()), sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 32);
 
@@ -48,7 +49,8 @@ void InaTransitionScene::Init()
     for (int i = 0; i < hp; i++) 
         AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
 
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 2, game_->GetCamera(), this));
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 
+                                         2.0f - game_->GetMiniGameManager()->GetTimerModifier(), game_->GetCamera(), this));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
 }
@@ -69,7 +71,7 @@ void InaTransitionScene::Update(float delta_time)
     }
 
     timer_ -= delta_time;
-    LP::SetTextString(timerText_, std::to_string(timer_));
+    LP::SetTextString(timerText_, std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager()->GetTimerModifier()));
 }
 
 void InaTransitionScene::Draw()
@@ -106,7 +108,8 @@ void InaTransitionScene::End()
 
 void InaTransitionScene::RandomMiniGame()
 {
-    int randMiniGame = rand() % 2;
+    //int randMiniGame = rand() % 2;
+    int randMiniGame = 1;
     switch (randMiniGame)
     {
     case 0:
