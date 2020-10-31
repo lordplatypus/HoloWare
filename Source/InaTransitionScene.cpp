@@ -1,5 +1,6 @@
 #include "../Header/InaTransitionScene.h"
 #include "../Header/LP.h"
+#include "../Header/MP.h"
 #include "../Header/ID.h"
 #include "../Header/InaTransitionDoor.h"
 #include "../Header/InaTransitionDoorOpen.h"
@@ -19,17 +20,19 @@ void InaTransitionScene::Init()
     if (game_->GetMiniGameManager()->GetPlayCount() % 10 == 0 && game_->GetMiniGameManager()->GetPlayCount() != 0)
     {
         state_ = DifficultyUp;
-        if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) return;
-        else game_->GetMiniGameManager()->SetDifficulty(game_->GetMiniGameManager()->GetDifficulty() + 1);
+        if (game_->GetMiniGameManager()->GetDifficulty() != hard_difficulty) game_->GetMiniGameManager()->SetDifficulty(game_->GetMiniGameManager()->GetDifficulty() + 1);
     }
     else if (game_->GetMiniGameManager()->GetWin())
     {//win
         state_ = WinState;
         game_->GetMiniGameManager()->SetTimerModifier(game_->GetMiniGameManager()->GetTimerModifier() + 0.1f);
+        MP::SetSoundSpeed(win_se, 1.0f + game_->GetMiniGameManager()->GetTimerModifier() / 10.0f);
+        MP::PlaySound(win_se);
     }
     else
     {//lose
         state_ = LossState;
+        MP::PlaySound(lose_se);
     }
     game_->GetMiniGameManager()->SetWin(false); //reset win for next game
 
@@ -109,7 +112,7 @@ void InaTransitionScene::End()
 void InaTransitionScene::RandomMiniGame()
 {
     //int randMiniGame = rand() % 2;
-    int randMiniGame = 1;
+    int randMiniGame = 0;
     switch (randMiniGame)
     {
     case 0:

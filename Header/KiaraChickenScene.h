@@ -25,6 +25,11 @@ private:
 
     //Scene transition
     bool changeScene_{false};
+
+    //Text
+    int text_{0};
+    int textAlpha_{255};
+    float textTimer_{0.1f};
 };
 
 #endif

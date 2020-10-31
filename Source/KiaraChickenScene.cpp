@@ -20,14 +20,15 @@ void KiaraChickenScene::Init()
 
     background_ = LP::SetSprite(kiara_chicken_background_image);
     gom_.Add(new KiaraChickenKiara(sf::Vector2f(0.0f, 30.0f), this));
-    gom_.Add(new KiaraChickenSpawner(this));
+    gom_.Add(new KiaraChickenSpawner(game_->GetMiniGameManager()->GetDifficulty(), this));
     MP::PlayMusic(kiara_theme);
 
-    float sec = 0.0f;
-    if (game_->GetMiniGameManager()->GetDifficulty() == easy_difficulty) sec = 10.0f;
-    else if (game_->GetMiniGameManager()->GetDifficulty() == medium_difficulty) sec = 7.0f;
-    else if (game_->GetMiniGameManager()->GetDifficulty() == hard_difficulty) sec = 4.0f;
-    sec -= game_->GetMiniGameManager()->GetTimerModifier();
+    textAlpha_ = 255;
+    text_ = LP::SetText("Collect at least 1 chicken leg!", sf::Vector2f(game_->GetCamera()->GetCameraCenter()), 128);
+    LP::SetTextOriginCenter(text_);
+    LP::SetTextScale(text_, .2f, .2f);
+
+    float sec = 7.0f - game_->GetMiniGameManager()->GetTimerModifier();
     AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64 * 4), sec, game_->GetCamera(), this, 4.0f));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this, 4.0f));
@@ -38,6 +39,18 @@ void KiaraChickenScene::Update(float delta_time)
     gom_.Update(delta_time);
     gom_.Collision();
     gom_.Remove();
+
+    if (textAlpha_ > 0) 
+    {
+        textTimer_ -= delta_time;
+        if (textTimer_ < 0.0f)
+        {
+            textAlpha_ -= 10;
+            if (textAlpha_ < 0) textAlpha_ = 0;
+            LP::SetTextColor(text_, 0, 0, 0, textAlpha_);
+            textTimer_ = 0.1f;
+        }
+    }
 
     if (changeScene_)
     {
@@ -57,6 +70,7 @@ void KiaraChickenScene::Draw()
 {
     LP::DrawSprite(background_);
     gom_.Draw();
+    LP::DrawText(text_);
 }
 
 void KiaraChickenScene::AddGameObject(GameObject* gameObject)
@@ -86,4 +100,5 @@ void KiaraChickenScene::End()
     LP::DeleteSprite(background_);
     gom_.Clear();
     MP::StopMusic(kiara_theme);
+    LP::DeleteText(text_);
 }

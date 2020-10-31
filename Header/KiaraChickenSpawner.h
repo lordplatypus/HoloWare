@@ -5,14 +5,17 @@
 class KiaraChickenSpawner : public GameObject
 {
 public:
-    KiaraChickenSpawner(Scene* scene);
+    KiaraChickenSpawner(int difficulty, Scene* scene);
     ~KiaraChickenSpawner();
     void Update(float delta_time) override;
-    void Draw() override;
 
 private:
-    float timer_{5.0f};
-    int chickenID_{0};
+    void ChooseObjectToSpawn();
+
+private:
+    float timer_{1.0f};
+    int difficulty_{0};
+    int odds_{0};
 };
 
 #endif

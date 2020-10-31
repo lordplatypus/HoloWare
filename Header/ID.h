@@ -14,6 +14,7 @@ enum //Images
     kiara_chicken_kiara_image,
     kiara_chicken_background_image,
     kiara_chicken_chicken_image,
+    kiara_chicken_rock_image,
     kiara_chicken_shadow_image,
     korone_yubi_left_hand_image,
     korone_yubi_right_hand_image,
@@ -33,7 +34,9 @@ enum //Sound Effects
     pop_se,
     squeek_se,
     whoosh_se,
-    thud_se
+    thud_se,
+    win_se,
+    lose_se
 };
 
 enum //Difficulty

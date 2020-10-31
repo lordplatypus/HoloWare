@@ -15,6 +15,7 @@ public:
 private:
     void InputHandle(float delta_time);
     void AnimationHandle(float delta_time);
+    void StunHandle(float delta_time);
 
 private:
     //Sprites
@@ -24,6 +25,12 @@ private:
     //for animation
     int frame_{0};
     float timer_{0.0f};
+
+    //Stun
+    bool stun_{false};
+    float stunTimer_{0.0f};
+    bool blink_{false};
+    float blinkTimer_{0.0f};
 
     //Score
     KiaraChickenScore* score_{nullptr};

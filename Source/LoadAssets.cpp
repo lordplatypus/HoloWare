@@ -31,6 +31,7 @@ void LoadAssets::LoadImage()
     LP::SetTexture(kiara_chicken_kiara_image, "./Resource/Kiara/Kiara.png", 1142, 1043);
     LP::SetTexture(kiara_chicken_background_image, "./Resource/Kiara/Background.png", 1920, 1080);
     LP::SetTexture(kiara_chicken_chicken_image, "./Resource/Kiara/Chicken.png", 59, 90);
+    LP::SetTexture(kiara_chicken_rock_image, "./Resource/Kiara/rock.png", 90, 61);
     LP::SetTexture(kiara_chicken_shadow_image, "./Resource/Kiara/Shadow.png", 448, 99);
     LP::SetTexture(korone_yubi_left_hand_image, "./Resource/Korone/LeftHand.png", 408, 64);
     LP::SetTexture(korone_yubi_right_hand_image, "./Resource/Korone/RightHand.png", 408, 64);
@@ -47,4 +48,6 @@ void LoadAssets::LoadSound()
     MP::SetSound(squeek_se, "./Resource/Korone/squeek.wav");
     MP::SetSound(whoosh_se, "./Resource/Transition/door_movement.wav");
     MP::SetSound(thud_se, "./Resource/Transition/door_impact.wav");
+    MP::SetSound(lose_se, "./Resource/Transition/jingle_lose.wav");
+    MP::SetSound(win_se, "./Resource/Transition/jingle_win.wav");
 }

@@ -32,14 +32,21 @@ KiaraChickenKiara::~KiaraChickenKiara()
 
 void KiaraChickenKiara::Update(float delta_time)
 {
-    InputHandle(delta_time);
-    AnimationHandle(delta_time);
+    if (stun_) StunHandle(delta_time);
+    else
+    {
+        InputHandle(delta_time);
+        AnimationHandle(delta_time);
+    }
 }
 
 void KiaraChickenKiara::Draw()
 {
-    LP::DrawSprite(shadowSprite_, sf::Vector2f(position_.x, position_.y + imageHeight_ - 50));
-    LP::DrawSprite(playerSprite_[frame_], position_);
+    if (!blink_)
+    {
+        LP::DrawSprite(shadowSprite_, sf::Vector2f(position_.x, position_.y + imageHeight_ - 50));
+        LP::DrawSprite(playerSprite_[frame_], position_);
+    }
     score_->Draw();
 }
 
@@ -49,6 +56,12 @@ void KiaraChickenKiara::ReactOnCollision(GameObject& other)
     {
         score_->AddToScore(100);
         scene_->AddGameObject(new KiaraChickenPoints(sf::Vector2f(1920 - 300, 0), scene_));
+        scene_->OnWin();
+    }
+    else if (other.GetTag() == "Rock")
+    {
+        stun_ = true;
+        stunTimer_ = 0.5f;
     }
 }
 
@@ -75,5 +88,23 @@ void KiaraChickenKiara::AnimationHandle(float delta_time)
         if (frame_ == 0) frame_ = 1;
         else frame_ = 0;
         timer_ = 0.0f;
+    }
+}
+
+void KiaraChickenKiara::StunHandle(float delta_time)
+{
+    blinkTimer_ -= delta_time;
+    if (blinkTimer_ <= 0.0f)
+    {
+        if (blink_) blink_ = false;
+        else blink_ = true;
+        blinkTimer_ = 0.05f;
+    }
+
+    stunTimer_ -= delta_time;
+    if (stunTimer_ <= 0.0f)
+    {
+        stun_ = false;
+        blink_ = false;
     }
 }
