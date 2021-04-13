@@ -52,7 +52,7 @@ void InaTransitionScene::Init()
     for (int i = 0; i < hp; i++) 
         AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
 
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64), 
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 32), 
                                          2.0f - game_->GetMiniGameManager()->GetTimerModifier(), game_->GetCamera(), this));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
@@ -111,8 +111,8 @@ void InaTransitionScene::End()
 
 void InaTransitionScene::RandomMiniGame()
 {
-    //int randMiniGame = rand() % 2;
-    int randMiniGame = 0;
+    int randMiniGame = rand() % 2;
+    //int randMiniGame = 1;
     switch (randMiniGame)
     {
     case 0:

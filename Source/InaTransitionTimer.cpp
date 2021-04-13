@@ -13,7 +13,7 @@ InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, float sec, Camera*
     position_ = position;
     sec_ = sec;
     if (sec_ - floor(sec_) > 0.0f) timer_ = sec_ - floor(sec_);
-    scale_= scale;
+    scale_= scale / 2.0f;
 
     end_ = LP::SetSprite(ina_transition_timer_end_image, position_);
     LP::SetSpriteScale(end_, scale_, scale_);
@@ -51,7 +51,7 @@ void InaTransitionTimer::Update(float delta_time)
         else if (deathSequence_)
         {
             Kill();
-            scene_->AddGameObject(new InaTransitionDoorClose(camera_, scene_, scale_));
+            scene_->AddGameObject(new InaTransitionDoorClose(camera_, scene_, scale_ * 2.0f));
         }
         else deathSequence_ = true;
     }

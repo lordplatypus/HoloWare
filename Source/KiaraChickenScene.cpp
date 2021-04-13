@@ -29,7 +29,7 @@ void KiaraChickenScene::Init()
     LP::SetTextScale(text_, .2f, .2f);
 
     float sec = 7.0f - game_->GetMiniGameManager()->GetTimerModifier();
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 64 * 4), sec, game_->GetCamera(), this, 4.0f));
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 32 * 4), sec, game_->GetCamera(), this, 4.0f));
 
     AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this, 4.0f));
 }
