@@ -1,0 +1,11 @@
+set(SOURCES
+${SOURCES}
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenKiara.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenSpawner.cpp 
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenChicken.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenRock.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenScore.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenPoints.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenScene.cpp
+PARENT_SCOPE
+)

@@ -1,0 +1,11 @@
+set(SOURCES
+${SOURCES}
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionScene.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionDoor.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionDoorOpen.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionDoorClose.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionHP.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionLoading.cpp
+${HoloWare_SOURCE_DIR}/Ina_Transition/InaTransitionTimer.cpp
+PARENT_SCOPE
+)
