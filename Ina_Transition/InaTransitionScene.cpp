@@ -16,17 +16,17 @@ InaTransitionScene::~InaTransitionScene()
 
 void InaTransitionScene::Init()
 {//Occurs everytime the scene is loaded
-    game_->GetMiniGameManager()->IncrementPlayCount();
-    if (game_->GetMiniGameManager()->GetPlayCount() % 10 == 0 && game_->GetMiniGameManager()->GetPlayCount() != 0)
+    game_->GetMiniGameManager().IncrementPlayCount();
+    if (game_->GetMiniGameManager().GetPlayCount() % 10 == 0 && game_->GetMiniGameManager().GetPlayCount() != 0)
     {
         state_ = DifficultyUp;
-        if (game_->GetMiniGameManager()->GetDifficulty() != hard_difficulty) game_->GetMiniGameManager()->SetDifficulty(game_->GetMiniGameManager()->GetDifficulty() + 1);
+        if (game_->GetMiniGameManager().GetDifficulty() != hard_difficulty) game_->GetMiniGameManager().SetDifficulty(game_->GetMiniGameManager().GetDifficulty() + 1);
     }
-    else if (game_->GetMiniGameManager()->GetWin())
+    else if (game_->GetMiniGameManager().GetWin())
     {//win
         state_ = WinState;
-        game_->GetMiniGameManager()->SetTimerModifier(game_->GetMiniGameManager()->GetTimerModifier() + 0.1f);
-        MP::SetSoundSpeed(win_se, 1.0f + game_->GetMiniGameManager()->GetTimerModifier() / 10.0f);
+        game_->GetMiniGameManager().SetTimerModifier(game_->GetMiniGameManager().GetTimerModifier() + 0.1f);
+        MP::SetSoundSpeed(win_se, 1.0f + game_->GetMiniGameManager().GetTimerModifier() / 10.0f);
         MP::PlaySound(win_se);
     }
     else
@@ -34,28 +34,25 @@ void InaTransitionScene::Init()
         state_ = LossState;
         MP::PlaySound(lose_se);
     }
-    game_->GetMiniGameManager()->SetWin(false); //reset win for next game
-
-    game_->GetCamera()->SetCameraViewSize(480, 270);
-    game_->GetCamera()->SetTarget(sf::Vector2f(480/2, 270/2));
+    game_->GetMiniGameManager().SetWin(false); //reset win for next game
 
     background_ = LP::SetSprite(ina_transition_background_image, sf::Vector2f(0.0f, 0.0f));
 
-    AddGameObject(new InaTransitionLoading(sf::Vector2f(game_->GetCamera()->GetCameraCenter().x - 160, game_->GetCamera()->GetCameraTopEdge() + 64), this));
+    AddGameObject(new InaTransitionLoading(sf::Vector2f(FindView("Transition")->getCenter().x - 160, 64), this));
 
-    timer_ = 5.0f - game_->GetMiniGameManager()->GetTimerModifier();
-    timerText_ = LP::SetText(std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager()->GetTimerModifier()), sf::Vector2f(game_->GetCamera()->GetCameraCenter().x, game_->GetCamera()->GetCameraBottomEdge() - 64), 16);
-    LP::SetTextOriginCenter(timerText_);
-    miniGameCountText_ = LP::SetText(std::to_string(game_->GetMiniGameManager()->GetPlayCount()), sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraTopEdge()), 32);
+    timer_ = 5.0f - game_->GetMiniGameManager().GetTimerModifier();
+    timerText_ = LP::SetText(std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager().GetTimerModifier()), sf::Vector2f(FindView("Transition")->getCenter().x, FindView("Transition")->getSize().y - 64), 16);
+    LP::SetTextOriginCenter(&timerText_);
+    miniGameCountText_ = LP::SetText(std::to_string(game_->GetMiniGameManager().GetPlayCount()), sf::Vector2f(0.0f, 0.0f), 32);
 
-    int hp = game_->GetMiniGameManager()->GetHP();
+    int hp = game_->GetMiniGameManager().GetHP();
     for (int i = 0; i < hp; i++) 
-        AddGameObject(new InaTransitionHP(sf::Vector2f((game_->GetCamera()->GetCameraCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), game_->GetCamera()->GetCameraCenter().y), this));
+        AddGameObject(new InaTransitionHP(sf::Vector2f((FindView("Transition")->getCenter().x - ((64 * hp) / 2)) + 32 + (i * 64), FindView("Transition")->getCenter().y), this));
 
-    AddGameObject(new InaTransitionTimer(sf::Vector2f(game_->GetCamera()->GetCameraLeftEdge(), game_->GetCamera()->GetCameraBottomEdge() - 32), 
-                                         2.0f - game_->GetMiniGameManager()->GetTimerModifier(), game_->GetCamera(), this));
+    AddGameObject(new InaTransitionTimer(sf::Vector2f(0.0f, FindView("Transition")->getSize().y - 32), 
+                                         2.0f - game_->GetMiniGameManager().GetTimerModifier(), this));
 
-    AddGameObject(new InaTransitionDoorOpen(game_->GetCamera(), this));
+    AddGameObject(new InaTransitionDoorOpen(this));
 }
 
 void InaTransitionScene::Reset()
@@ -74,15 +71,15 @@ void InaTransitionScene::Update(float delta_time)
     }
 
     timer_ -= delta_time;
-    LP::SetTextString(timerText_, std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager()->GetTimerModifier()));
+    timerText_.setString(std::to_string(timer_) + " " + std::to_string(game_->GetMiniGameManager().GetTimerModifier()));
 }
 
-void InaTransitionScene::Draw()
+void InaTransitionScene::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(background_);
-    LP::DrawText(timerText_);
-    LP::DrawText(miniGameCountText_);
-    gom_.Draw();
+    render_window.draw(background_);
+    render_window.draw(timerText_);
+    render_window.draw(miniGameCountText_);
+    gom_.Draw(render_window);
 }
 
 void InaTransitionScene::AddGameObject(GameObject* gameObject)
@@ -90,13 +87,27 @@ void InaTransitionScene::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject);
 }
 
-void InaTransitionScene::OnWin()
-{}
+GameObject* InaTransitionScene::FindGameObject(const std::string& string, const bool byName, const bool byTag, const bool byID)
+{//if byTag and byID are both left to default (false), search by name
+    return gom_.Find(string, byName, byTag, byID); //returns a GameObject, returns a nullptr if the GameObject is not found
+}
 
-void InaTransitionScene::OnLoss()
-{}
+void InaTransitionScene::SortGameObjects()
+{
+    gom_.SortByLayers();
+}
 
-void InaTransitionScene::ChangeScene()
+sf::View* InaTransitionScene::FindView(const std::string& viewName)
+{
+    return game_->GetCamera()->GetView(viewName);
+}
+
+void InaTransitionScene::SetOutcome(const bool outcome)
+{
+    game_->GetMiniGameManager().SetWin(outcome);
+}
+
+void InaTransitionScene::ChangeScene(const std::string& sceneName)
 {
     changeScene_ = true;
 }
@@ -104,9 +115,6 @@ void InaTransitionScene::ChangeScene()
 void InaTransitionScene::End()
 {
     gom_.Clear();
-    LP::DeleteText(timerText_);
-    LP::DeleteText(miniGameCountText_);
-    LP::DeleteSprite(background_);
 }
 
 void InaTransitionScene::RandomMiniGame()

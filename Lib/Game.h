@@ -11,19 +11,21 @@ class Game
 public:
     Game(Camera* camera);
     ~Game();
+    //Update Game
     void Update(float delta_time);
-    void Draw();
-
-    //Scene Management
+    //Draw Game
+    void Draw(sf::RenderWindow& render_window);
+    //Get Camera
+    Camera* GetCamera();
+    //Add a Scene to the scene map
     void AddScene(const std::string& name, Scene* scene);
+    //Switch to a different scene
     void ChangeScene(const std::string& newScene);
+    //End a scene
     void EndScene();
 
     //MiniGame Management
-    MiniGameManager* GetMiniGameManager();
-
-    //Camera
-    Camera* GetCamera();
+    MiniGameManager& GetMiniGameManager();
 
     //Deletes pointers and whatnot at game close
     void Clear();

@@ -4,6 +4,7 @@
 #include "ID.h"
 #include "SceneNull.h"
 #include "SceneTitle.h"
+#include "IP.h"
 #include "../Ina_Transition/InaTransitionScene.h"
 #include "../Kiara_Loading_Minigame/KiaraChickenScene.h"
 #include "../Korone_Yubi_Minigame/KoroneYubiScene.h"
@@ -32,11 +33,17 @@ Game::~Game()
 void Game::Update(float delta_time)
 {
     scene_->Update(delta_time);
+    IP::Reset();
 }
 
-void Game::Draw()
+void Game::Draw(sf::RenderWindow& render_window)
 {
-    scene_->Draw();
+    scene_->Draw(render_window);
+}
+
+Camera* Game::GetCamera()
+{
+    return camera_;
 }
 
 void Game::AddScene(const std::string& name, Scene* scene)
@@ -57,14 +64,9 @@ void Game::EndScene()
     scene_ = &nullScene;
 }
 
-MiniGameManager* Game::GetMiniGameManager()
+MiniGameManager& Game::GetMiniGameManager()
 {
-    return &miniGameManager_;
-}
-
-Camera* Game::GetCamera()
-{
-    return camera_;
+    return miniGameManager_;
 }
 
 void Game::Clear()

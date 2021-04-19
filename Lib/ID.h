@@ -53,4 +53,13 @@ enum Scenes//Scenes
     kiara_minigame
 };
 
+enum //Render Layer
+{
+    main_layer,
+    minigame_UI_layer,
+    timer_layer,
+    transition_layer,
+    UI_layer
+};
+
 #endif 

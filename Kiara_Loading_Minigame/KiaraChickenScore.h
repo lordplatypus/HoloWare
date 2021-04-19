@@ -5,14 +5,15 @@
 class KiaraChickenScore
 {
 public:
-    KiaraChickenScore(sf::Vector2f position);
+    KiaraChickenScore();
     ~KiaraChickenScore();
-    void Draw();
+    void Draw(sf::RenderWindow& render_window) const;
     void AddToScore(const int score);
+    void SetPosition(const sf::Vector2f& position);
 
 private:
     sf::Vector2f position_{0.0f, 0.0f};
-    int scoreText_{0};
+    sf::Text scoreText_;
     int scoreNum_{0};
 };
 

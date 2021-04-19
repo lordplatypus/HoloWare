@@ -3,45 +3,41 @@
 #include "../Lib/MP.h"
 #include "../Lib/ID.h"
 
-InaTransitionDoorOpen::InaTransitionDoorOpen(Camera* camera, Scene* scene, float scale)
+InaTransitionDoorOpen::InaTransitionDoorOpen(Scene* scene)
 {
     scene_ = scene;
-    camera_ = camera;
     tag_ = "Transition";
     name_ = "InaDoorOpen";
-    scale_ = scale;
-    imageWidth_ = 240 * scale;
-    imageHeight_ = 270 * scale;
-    positionRight_ = sf::Vector2f(camera_->GetCameraCenter().x, camera_->GetCameraTopEdge());
-    endPositionRight_ = sf::Vector2f(camera_->GetCameraRightEdge(), camera_->GetCameraTopEdge());
-    positionLeft_ = sf::Vector2f(camera_->GetCameraLeftEdge(), camera_->GetCameraTopEdge());
-    endPositionLeft_ = sf::Vector2f(camera_->GetCameraLeftEdge() - imageWidth_, camera_->GetCameraTopEdge());
+    layerID_ = transition_layer;
+    imageWidth_ = 240;
+    imageHeight_ = 270;
+    positionRight_ = sf::Vector2f(240.0f, 0.0f);
+    endPositionRight_ = sf::Vector2f(480.0f, 0.0f);
+    positionLeft_ = sf::Vector2f(0.0f, 0.0f);
+    endPositionLeft_ = sf::Vector2f(-240.0f, 0.0f);
 
     spriteRight_ = LP::SetSprite(ina_transition_door_image, positionRight_);
-    LP::SetSpriteScale(spriteRight_, scale_, scale_);
     spriteLeft_ = LP::SetSprite(ina_transition_door_image, positionLeft_);
-    LP::SetSpriteScale(spriteLeft_, scale_, scale_);
 
     MP::PlaySound(whoosh_se);
 }
 
 InaTransitionDoorOpen::~InaTransitionDoorOpen()
-{
-    LP::DeleteSprite(spriteRight_);
-    LP::DeleteSprite(spriteLeft_);
-}
+{}
 
 void InaTransitionDoorOpen::Update(float delta_time)
 {
-    if (positionRight_ != endPositionRight_) positionRight_ = math_.Lerp(positionRight_, endPositionRight_, 10 * scale_ * delta_time);
-    if (positionLeft_ != endPositionLeft_) positionLeft_ = math_.Lerp(positionLeft_, endPositionLeft_, 10 * scale_ * delta_time);
+    if (positionRight_ != endPositionRight_) positionRight_ = math_.Lerp(positionRight_, endPositionRight_, 10 * delta_time);
+    if (positionLeft_ != endPositionLeft_) positionLeft_ = math_.Lerp(positionLeft_, endPositionLeft_, 10 * delta_time);
 
     timer_ -= delta_time;
     if (timer_ <= 0.0f) Kill();
 }
 
-void InaTransitionDoorOpen::Draw()
+void InaTransitionDoorOpen::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(spriteRight_, positionRight_);
-    LP::DrawSprite(spriteLeft_, positionLeft_);
+    render_window.setView(*scene_->FindView("Transition"));
+    render_window.draw(spriteRight_);
+    render_window.draw(spriteLeft_);
+    render_window.setView(*scene_->FindView("Main"));
 }

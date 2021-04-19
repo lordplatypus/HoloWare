@@ -9,7 +9,7 @@ public:
     KiaraChickenKiara(sf::Vector2f position, Scene* scene);
     ~KiaraChickenKiara();
     void Update(float delta_time) override;
-    void Draw() override;
+    void Draw(sf::RenderWindow& render_window) const override;
     void ReactOnCollision(GameObject& other) override;
 
 private:
@@ -19,8 +19,8 @@ private:
 
 private:
     //Sprites
-    std::vector<int> playerSprite_;
-    int shadowSprite_{0};
+    std::vector<sf::Sprite> playerSprite_;
+    sf::Sprite shadowSprite_;
 
     //for animation
     int frame_{0};
@@ -33,7 +33,7 @@ private:
     float blinkTimer_{0.0f};
 
     //Score
-    KiaraChickenScore* score_{nullptr};
+    KiaraChickenScore score_;
 };
 
 #endif

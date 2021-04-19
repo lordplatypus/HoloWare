@@ -1,3 +1,4 @@
+#include <SFML/Graphics.hpp>
 #include "GameObject.h"
 
 GameObject::GameObject() {}
@@ -7,13 +8,19 @@ GameObject::~GameObject() {}
 void GameObject::Update(float delta_time)
 {}
 
-void GameObject::Draw()
+void GameObject::DelayedUpdate(float delta_time)
+{}
+
+void GameObject::Draw(sf::RenderWindow& render_window) const
+{}
+
+void GameObject::DelayedDraw(sf::RenderWindow& render_window) const
 {}
 
 void GameObject::ReactOnCollision(GameObject& other)
 {}
 
-void GameObject::TakeDamage(const int damage)
+void GameObject::ReactOnMissedCollision(GameObject& other)
 {}
 
 void GameObject::StorePosition()
@@ -23,7 +30,7 @@ void GameObject::StorePosition()
 
 int GameObject::GetLeft() const
 {
-    return position_.x + left_;
+    return left_;
 }
 
 void GameObject::SetLeft(const int left)
@@ -33,7 +40,7 @@ void GameObject::SetLeft(const int left)
 
 int GameObject::GetRight() const
 {
-    return position_.x + right_;
+    return right_;
 }
 
 void GameObject::SetRight(const int right)
@@ -43,7 +50,7 @@ void GameObject::SetRight(const int right)
 
 int GameObject::GetTop() const
 {
-    return position_.y + top_;
+    return top_;
 }
 
 void GameObject::SetTop(const int top)
@@ -53,7 +60,7 @@ void GameObject::SetTop(const int top)
 
 int GameObject::GetBottom() const
 {
-    return position_.y + bottom_;
+    return bottom_;
 }
 
 void GameObject::SetBottom(const int bottom)
@@ -61,35 +68,46 @@ void GameObject::SetBottom(const int bottom)
     bottom_ = bottom;
 }
 
-const std::vector<sf::Vector2f> GameObject::GetHitBox()
+sf::IntRect GameObject::GetHitBox() const
 {
-    return std::vector<sf::Vector2f>
-    {
-        sf::Vector2f(GetLeft(), GetTop()), 
-        sf::Vector2f(GetRight(), GetTop()), 
-        sf::Vector2f(GetLeft(), GetBottom()), 
-        sf::Vector2f(GetRight(), GetBottom())
-    };
+    return sf::IntRect(GetPosition().x + GetLeft(), GetPosition().y + GetTop(), imageWidth_ - (GetRight() + GetLeft()), imageHeight_ - (GetBottom() + GetTop()));
 }
 
 bool GameObject::IsCollision(GameObject& other)
 {
-    std::vector<sf::Vector2f> otherHitBox = other.GetHitBox();
-    for (int i = 0; i < otherHitBox.size(); i++)
-    {
-        if (otherHitBox[i].x > GetLeft() && otherHitBox[i].x < GetRight() && otherHitBox[i].y > GetTop() && otherHitBox[i].y < GetBottom())
-        {
-            return true;
-        }
-    }
-    if (position_ == other.GetPosition()) return true;
-    return false;
+    return GetHitBox().intersects(other.GetHitBox());
 }
 
 void GameObject::OnCollision(GameObject& other)
 {
     ReactOnCollision(other);
     other.ReactOnCollision(*this);
+}
+
+void GameObject::OnMissedCollision(GameObject& other)
+{
+    ReactOnMissedCollision(other);
+    other.ReactOnMissedCollision(*this);
+}
+
+void GameObject::OnOneWayCollision(GameObject& other)
+{
+    ReactOnCollision(other);
+}
+
+void GameObject::OnMissedOneWayCollision(GameObject& other)
+{
+    ReactOnMissedCollision(other);
+}
+
+bool GameObject::GetActive() const
+{
+    return isActive_;
+}
+
+void GameObject::SetActive(const bool isActive)
+{
+    isActive_ = isActive;
 }
 
 void GameObject::Kill()
@@ -125,4 +143,9 @@ const std::string& GameObject::GetName() const
 int GameObject::GetID() const
 {
     return ID_;
+}
+
+int GameObject::GetLayerID() const
+{
+    return layerID_;
 }

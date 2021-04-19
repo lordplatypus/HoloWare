@@ -9,7 +9,7 @@ public:
     InaTransitionDoor(sf::Vector2f position, sf::Vector2f endPosition, Scene* scene, float scale = 1.0f);
     ~InaTransitionDoor();
     void Update(float delta_time) override;
-    void Draw() override;
+    void Draw(sf::RenderWindow& render_windoe) const override;
     void ReactOnCollision(GameObject& other) override;
 
 private:

@@ -1,11 +1,13 @@
 #include "KiaraChickenPoints.h"
 #include "../Lib/LP.h"
+#include "../Lib/ID.h"
 
 KiaraChickenPoints::KiaraChickenPoints(sf::Vector2f position, Scene* scene)
 {
     scene_ = scene;
     tag_ = "KiaraChickenPoints";
     name_ = "KiaraChickenPoints";
+    layerID_ = minigame_UI_layer;
     position_ = position;
     velocity_ = sf::Vector2f(2000.0f, 2000.0f);
 
@@ -13,9 +15,7 @@ KiaraChickenPoints::KiaraChickenPoints(sf::Vector2f position, Scene* scene)
 }
 
 KiaraChickenPoints::~KiaraChickenPoints()
-{
-    LP::DeleteText(text_);
-}
+{}
 
 void KiaraChickenPoints::Update(float delta_time)
 {
@@ -23,7 +23,7 @@ void KiaraChickenPoints::Update(float delta_time)
     else
     {
         position_.y = 1080 - 50 - 64;
-        LP::SetTextColor(text_, 255, 255, 255, alpha_);
+        text_.setFillColor(sf::Color(255, 255, 255, alpha_));
         timer_ -= delta_time;
         if (timer_ <= 0.0f)
         {
@@ -33,10 +33,10 @@ void KiaraChickenPoints::Update(float delta_time)
         }
     }
 
-    LP::SetTextPosition(text_, position_);
+    text_.setPosition(position_);
 }
 
-void KiaraChickenPoints::Draw()
+void KiaraChickenPoints::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawText(text_);
+    render_window.draw(text_);
 }

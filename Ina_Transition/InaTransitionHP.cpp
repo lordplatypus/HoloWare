@@ -7,22 +7,22 @@ InaTransitionHP::InaTransitionHP(sf::Vector2f position, Scene* scene)
     scene_ = scene;
     tag_ = "HPIcon";
     name_ = "Tako";
+    layerID_ = main_layer;
     position_ = position;
     imageWidth_ = 64;
     imageHeight_ = 64;
 
-    takoSprite_ = LP::SetSprite(ina_transition_hp_image, imageWidth_, imageHeight_, 4, 1);
-    for (auto i : takoSprite_) 
+    takoSprite_ = LP::SetMultiFrameSprite(ina_transition_hp_image, imageWidth_, imageHeight_, 4, 1);
+    for (auto sprite : takoSprite_) 
     {
-        LP::SetSpriteOriginCenter(i);
-        LP::SetSpriteRotation(i, angle_);
+        LP::SetSpriteOriginCenter(&sprite);
+        sprite.setPosition(position_);
+        sprite.setRotation(angle_);
     }
 }
 
 InaTransitionHP::~InaTransitionHP()
-{
-    for (auto i : takoSprite_) LP::DeleteSprite(i);
-}
+{}
 
 void InaTransitionHP::Update(float delta_time)
 {
@@ -34,13 +34,15 @@ void InaTransitionHP::Update(float delta_time)
     if(angle_ != endAngle_) 
     {
         angle_ = math_.Lerp(angle_, endAngle_, delta_time * 3.5f);
-        for (auto i : takoSprite_) LP::SetSpriteRotation(i, angle_);
+        for (auto sprite : takoSprite_) sprite.setRotation(angle_);
     }
 }
 
-void InaTransitionHP::Draw()
+void InaTransitionHP::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(takoSprite_[frame_], position_);
+    render_window.setView(*scene_->FindView("Transition"));
+    render_window.draw(takoSprite_[frame_]);
+    render_window.setView(*scene_->FindView("Main"));
 }
 
 void InaTransitionHP::ReactOnCollision(GameObject& other)
@@ -65,7 +67,7 @@ void InaTransitionHP::ScaleHandle(float delta_time)
         if (scale_ == 1.0f) scale_ = 0.5f;
         else scale_ = 1.0f;
 
-        for (auto i : takoSprite_) LP::SetSpriteScale(i, scale_, scale_);
+        for (auto sprite : takoSprite_) sprite.setScale(scale_, scale_);
         scaleTimer_ = 0.0f;
     }
 }

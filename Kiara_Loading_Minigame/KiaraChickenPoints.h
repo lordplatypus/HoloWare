@@ -8,10 +8,10 @@ public:
     KiaraChickenPoints(sf::Vector2f position, Scene* scene);
     ~KiaraChickenPoints();
     void Update(float delta_time) override;
-    void Draw() override;
+    void Draw(sf::RenderWindow& render_window) const override;
 
 private:
-    int text_{0};
+    sf::Text text_;
     int alpha_{255};
     float timer_{0.005f};
 };

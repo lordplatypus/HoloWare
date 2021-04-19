@@ -8,6 +8,7 @@ KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
     scene_ = scene;
     tag_ = "Player";
     name_ = "Kiara";
+    layerID_ = main_layer;
     position_ = position;
     velocity_ = sf::Vector2f(1000.0f, 1000.0f);
     imageWidth_ = 1142 / 2;
@@ -17,18 +18,14 @@ KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
     SetTop(375);
     SetBottom(375 + 225);
 
-    playerSprite_ = LP::SetSprite(kiara_chicken_kiara_image, 1142 / 2, 1043, 2, 1);
+    playerSprite_ = LP::SetMultiFrameSprite(kiara_chicken_kiara_image, 1142 / 2, 1043, 2, 1);
     shadowSprite_ = LP::SetSprite(kiara_chicken_shadow_image, sf::Vector2f(position_.x, position_.y + imageHeight_));
 
-    score_ = new KiaraChickenScore(sf::Vector2f(50.0f, 50.0f));
+    score_.SetPosition(sf::Vector2f(50.0f, 50.0f));
 }
 
 KiaraChickenKiara::~KiaraChickenKiara()
-{
-    for (auto i : playerSprite_) LP::DeleteSprite(i);
-    LP::DeleteSprite(shadowSprite_);
-    delete score_;
-}
+{}
 
 void KiaraChickenKiara::Update(float delta_time)
 {
@@ -40,23 +37,24 @@ void KiaraChickenKiara::Update(float delta_time)
     }
 }
 
-void KiaraChickenKiara::Draw()
+void KiaraChickenKiara::Draw(sf::RenderWindow& render_window) const
 {
     if (!blink_)
     {
-        LP::DrawSprite(shadowSprite_, sf::Vector2f(position_.x, position_.y + imageHeight_ - 50));
-        LP::DrawSprite(playerSprite_[frame_], position_);
+        render_window.draw(playerSprite_[frame_]);
+        render_window.draw(shadowSprite_);
     }
-    score_->Draw();
+    score_.Draw(render_window);
 }
 
 void KiaraChickenKiara::ReactOnCollision(GameObject& other)
 {
     if (other.GetTag() == "Chicken")
     {
-        score_->AddToScore(100);
+        score_.AddToScore(100);
         scene_->AddGameObject(new KiaraChickenPoints(sf::Vector2f(1920 - 300, 0), scene_));
-        scene_->OnWin();
+        //scene_->OnWin();
+        scene_->SetOutcome(true);
     }
     else if (other.GetTag() == "Rock")
     {
@@ -78,6 +76,9 @@ void KiaraChickenKiara::InputHandle(float delta_time)
 
     if (position_.x < 0.0f) position_.x = 0.0f;
     if (position_.x + imageWidth_ > 1920) position_.x = 1920 - imageWidth_;
+
+    playerSprite_[frame_].setPosition(position_);
+    shadowSprite_.setPosition(sf::Vector2f(position_.x, position_.y + imageHeight_ - 50));
 }
 
 void KiaraChickenKiara::AnimationHandle(float delta_time)

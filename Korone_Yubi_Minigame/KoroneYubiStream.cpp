@@ -8,16 +8,18 @@ KoroneYubiStream::KoroneYubiStream(sf::Vector2f position, Scene* scene)
     position_ = position;
     name_ = "Stream";
     tag_ = "Stream";
+    layerID_ = main_layer;
 
     streamSprite_ = LP::SetSprite(korone_yubi_stream_image, position_);
     laugh1Sprite_ = LP::SetSprite(korone_yubi_laugh1_image, position_);
-    LP::SetSpriteOrigin(laugh1Sprite_, sf::Vector2f(-354, -185));
+    laugh1Sprite_.setOrigin(sf::Vector2f(-354, -185));
     laugh2Sprite_  = LP::SetSprite(korone_yubi_laugh2_image, position_);
-    LP::SetSpriteOrigin(laugh2Sprite_, sf::Vector2f(-373, -146));
-    chatSprite_  = LP::SetSprite(korone_yubi_chat_image, 75, 44, 7, 1);
+    laugh2Sprite_.setOrigin(sf::Vector2f(-373, -146));
+    chatSprite_  = LP::SetMultiFrameSprite(korone_yubi_chat_image, 75, 44, 7, 1);
     for (auto sprite : chatSprite_)
     {
-        LP::SetSpriteOrigin(sprite, sf::Vector2f(-40, -226));
+        sprite.setOrigin(sf::Vector2f(-40, -226));
+        sprite.setPosition(position_);
     }
 }
 
@@ -30,12 +32,12 @@ void KoroneYubiStream::Update(float delta_time)
     LaughHandle(delta_time);
 }
 
-void KoroneYubiStream::Draw()
+void KoroneYubiStream::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(streamSprite_, position_);
-    LP::DrawSprite(laugh1Sprite_, position_);
-    LP::DrawSprite(laugh2Sprite_, position_);
-    LP::DrawSprite(chatSprite_[chatFrame_], position_);
+    render_window.draw(streamSprite_);
+    render_window.draw(laugh1Sprite_);
+    render_window.draw(laugh2Sprite_);
+    render_window.draw(chatSprite_[chatFrame_]);
 }
 
 void KoroneYubiStream::ChatHandle(float delta_time)
@@ -56,14 +58,14 @@ void KoroneYubiStream::LaughHandle(float delta_time)
     {
         if (laughFrame_)
         {
-            LP::SetSpriteOrigin(laugh1Sprite_, sf::Vector2f(-360, -185));
-            LP::SetSpriteOrigin(laugh2Sprite_, sf::Vector2f(-373, -146));
+            laugh1Sprite_.setOrigin(sf::Vector2f(-360, -185));
+            laugh2Sprite_.setOrigin(sf::Vector2f(-373, -146));
             laughFrame_ = false;
         }
         else
         {
-            LP::SetSpriteOrigin(laugh1Sprite_, sf::Vector2f(-354, -185));
-            LP::SetSpriteOrigin(laugh2Sprite_, sf::Vector2f(-368, -141));
+            laugh1Sprite_.setOrigin(sf::Vector2f(-354, -185));
+            laugh2Sprite_.setOrigin(sf::Vector2f(-368, -141));
             laughFrame_ = true;
         }
         laughTimer_ = 0.3f;

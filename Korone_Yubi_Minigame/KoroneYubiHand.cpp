@@ -2,51 +2,65 @@
 #include "../Lib/LP.h"
 #include "../Lib/MP.h"
 #include "../Lib/ID.h"
+#include "../Lib/IP.h"
 
-KoroneYubiHand::KoroneYubiHand(sf::Vector2f position, int ID, KoroneYubiManager* kym, Scene* scene)
+KoroneYubiHand::KoroneYubiHand(sf::Vector2f position, Scene* scene, int maxHands, int num)
 {
     scene_ = scene;
-    kym_ = kym;
     position_ = position;
     name_ = "Hand";
     tag_ = "Hand";
-    ID_ = ID;
+    layerID_ = main_layer;
+    ID_ = num; //hand position within the group of hands
+    maxHands_ = maxHands;
     imageWidth_ = 68;
     imageHeight_ = 64;
 
-    if (ID_ % 2 == 0) sprites_ = LP::SetSprite(korone_yubi_left_hand_image, imageWidth_, imageHeight_, 6, 1);
-    else sprites_ = LP::SetSprite(korone_yubi_right_hand_image, imageWidth_, imageHeight_, 6, 1);
-    for (auto sprite : sprites_) LP::SetSpriteScale(sprite, 2.0f, 2.0f);
+    if (ID_ % 2 == 0) sprites_ = LP::SetMultiFrameSprite(korone_yubi_left_hand_image, imageWidth_, imageHeight_, 6, 1);
+    else sprites_ = LP::SetMultiFrameSprite(korone_yubi_right_hand_image, imageWidth_, imageHeight_, 6, 1);
+    for (auto sprite : sprites_) 
+    {
+        sprite.setScale(2.0f, 2.0f);
+        sprite.setPosition(position_);
+    }
+
+    if (num <= maxHands)
+    {
+        nextHand_ = new KoroneYubiHand(sf::Vector2f(scene_->FindView("Main")->getCenter().x - (136 * maxHands)/2 - 68 + 136 * ID_, scene_->FindView("Main")->getSize().y - 64*2), scene_, maxHands, ID_+1);
+    }
 }
 
 KoroneYubiHand::~KoroneYubiHand()
-{
-    for (auto sprite : sprites_) LP::DeleteSprite(sprite);
-}
+{}
 
 void KoroneYubiHand::Update(float delta_time)
 {
-    if (kym_->GetActiveHand() == ID_) InputHandle();
+    if (active_) InputHandle();
+    if (ID_ != maxHands_) nextHand_->Update(delta_time);
 }
 
-void KoroneYubiHand::Draw()
+void KoroneYubiHand::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(sprites_[frame_], position_);
+    render_window.draw(sprites_[frame_]);
+    if (ID_ != maxHands_) nextHand_->Draw(render_window);
+}
+
+void KoroneYubiHand::SetActive()
+{
+    active_ = true;
 }
 
 void KoroneYubiHand::InputHandle()
 {
-    if (!spacePressed_ && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
+    if (IP::PressSpace())
     {
         if (frame_ < 4) frame_++;
         else
         { 
             frame_++;
-            kym_->SetActiveHand(ID_+1);
+            if (ID_ != maxHands_) nextHand_->SetActive();
+            active_ = false;
         }
-        spacePressed_ = true;
         MP::PlaySound(pop_se);
     }
-
-    if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) spacePressed_ = false;
 }

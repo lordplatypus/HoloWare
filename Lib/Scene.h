@@ -8,15 +8,26 @@ class GameObject;
 class Scene
 {
 public:
-    //Scene();
     virtual ~Scene() = default;
+    //This is called everytime this scene is loaded
     virtual void Init() = 0;
+    //Scene Update
     virtual void Update(float delta_time) = 0;
-    virtual void Draw() = 0;
+    //Scene Draw
+    virtual void Draw(sf::RenderWindow& render_window) const = 0;
+    //Add gameobject to the list of gameobjects
     virtual void AddGameObject(GameObject* gameObject) = 0;
-    virtual void OnWin() = 0;
-    virtual void OnLoss() = 0;
-    virtual void ChangeScene() = 0;
+    //Find an object by either ID, Tag, or Name
+    virtual GameObject* FindGameObject(const std::string& string, const bool byName = true, const bool byTag = false, const bool byID = false) = 0;
+    //Sort the GameObject list based on LayerID (found in GameObjects)
+    virtual void SortGameObjects() = 0;
+    //Find a view
+    virtual sf::View* FindView(const std::string& viewName) = 0;
+    //Call "SetWin()" in the "Game" class, also trigger win screen/animation/transition/etc here
+    virtual void SetOutcome(const bool outcome) = 0;
+    //Change to a different scene
+    virtual void ChangeScene(const std::string& sceneName) = 0;
+    //This is called when switching to a different scene, delete unneeded pointers and sprites here
     virtual void End() = 0;
 };
 

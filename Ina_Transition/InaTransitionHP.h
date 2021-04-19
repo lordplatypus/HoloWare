@@ -9,7 +9,7 @@ public:
     InaTransitionHP(sf::Vector2f position, Scene* scene);
     ~InaTransitionHP();
     void Update(float delta_time) override;
-    void Draw() override;
+    void Draw(sf::RenderWindow& render_window) const override;
     void ReactOnCollision(GameObject& other) override;
 
 private:
@@ -20,7 +20,7 @@ private:
     Math math_;
 
     //Sprites
-    std::vector<int> takoSprite_{};
+    std::vector<sf::Sprite> takoSprite_;
 
     //for animation
     int frame_{0};

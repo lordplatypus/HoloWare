@@ -8,11 +8,10 @@ public:
     InaTransitionLoading(sf::Vector2f position, Scene* scene);
     ~InaTransitionLoading();
     void Update(float delta_time) override;
-    void Draw() override;
-    void ReactOnCollision(GameObject& other) override;
+    void Draw(sf::RenderWindow& render_window) const override;
 
 private:
-    std::vector<int> letterSprites_;
+    std::vector<sf::Sprite> letterSprites_;
     std::vector<float> scales_;
     float timer_{0.0f};
     int num_{0};

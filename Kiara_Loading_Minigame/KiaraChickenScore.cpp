@@ -1,24 +1,26 @@
 #include "KiaraChickenScore.h"
 #include "../Lib/LP.h"
 
-KiaraChickenScore::KiaraChickenScore(sf::Vector2f position)
+KiaraChickenScore::KiaraChickenScore()
 {
-    position_ = position;
     scoreText_ = LP::SetText(std::to_string(scoreNum_), position_, 64);
 }
 
 KiaraChickenScore::~KiaraChickenScore()
-{
-    LP::DeleteText(scoreText_);
-}
+{}
 
-void KiaraChickenScore::Draw()
+void KiaraChickenScore::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawText(scoreText_);
+    render_window.draw(scoreText_);
 }
 
 void KiaraChickenScore::AddToScore(const int score)
 {
     scoreNum_ += score;
-    LP::SetTextString(scoreText_, std::to_string(scoreNum_));
+    scoreText_.setString(std::to_string(scoreNum_));
+}
+
+void KiaraChickenScore::SetPosition(const sf::Vector2f& position)
+{
+    position_ = position;
 }

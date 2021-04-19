@@ -7,6 +7,7 @@
     scene_ = scene;
     tag_ = "Chicken";
     name_ = "Chicken";
+    layerID_ = main_layer;
     position_ = position;
     velocity_ = sf::Vector2f(-(rand() % 2000 + 500), rand() % 1000 + 500);
     angleVelocity_ = rand() % 1000 + 100;
@@ -18,24 +19,23 @@
     SetBottom(imageHeight_);
 
     sprite_ = LP::SetSprite(kiara_chicken_chicken_image, position_);
-    LP::SetSpriteOriginCenter(sprite_);
+    LP::SetSpriteOriginCenter(&sprite_);
 }
 
  KiaraChickenChicken::~KiaraChickenChicken()
-{
-    LP::DeleteSprite(sprite_);
-}
+{}
 
 void  KiaraChickenChicken::Update(float delta_time)
 {
     position_ += velocity_ * delta_time;
+    sprite_.setPosition(position_);
     angle_ += angleVelocity_ * delta_time;
-    LP::SetSpriteRotation(sprite_, angle_);
+    sprite_.setRotation(angle_);
 }
 
-void  KiaraChickenChicken::Draw()
+void  KiaraChickenChicken::Draw(sf::RenderWindow& render_window) const
 {
-    LP::DrawSprite(sprite_, position_);
+    render_window.draw(sprite_);
 }
 
 void  KiaraChickenChicken::ReactOnCollision(GameObject& other)

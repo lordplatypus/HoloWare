@@ -1,64 +1,72 @@
 #include "Camera.h"
 
-Camera::Camera() 
+Camera::Camera(sf::RenderWindow* renderWindow, const sf::Vector2f& aspectRatio) : 
+               renderWindow_{renderWindow}, aspectRatio_{aspectRatio} 
+{}
+
+Camera::~Camera() 
 {
-    //mainCamera.reset(sf::FloatRect(0.f, 0.f, 1080.f, 720.f));
-    //mainCamera.setSize();
+    Clear();
 }
 
-Camera::~Camera() {}
-
-sf::View* Camera::GetCamera()
+const sf::RenderWindow& Camera::GetRenderWindow() const
 {
-    return &mainCamera;
+    return *renderWindow_;
 }
 
-void Camera::SetTarget(sf::Vector2f position)
+void Camera::SetAspectRatio(const sf::Vector2f& aspectRatio)
 {
-    mainCamera.setCenter(position);
+    aspectRatio_ = aspectRatio;
 }
 
-void Camera::SetCameraViewSize(float width, float height)
+const sf::Vector2f& Camera::GetAspectRatio() const
 {
-    mainCamera.setSize(width, height);
+    return aspectRatio_;
 }
 
-void Camera::SetCameraViewSize(sf::Vector2f size)
+void Camera::SetView(const std::string& viewName)
 {
-    mainCamera.setSize(size);
+    views_[viewName] = new sf::View(sf::FloatRect(0.0f, 0.0f, aspectRatio_.x, aspectRatio_.y));
 }
 
-void Camera::SetCameraViewSize(sf::FloatRect area)
+void Camera::SetView(const std::string& viewName, float width, float height)
 {
-    mainCamera.reset(area);
+    views_[viewName] = new sf::View(sf::FloatRect(0.0f, 0.0f, width, height));
+    //SetCurrentView(viewName);
 }
 
-sf::Vector2f Camera::GetCameraCenter()
+void Camera::SetView(const std::string& viewName, const sf::Vector2f& size)
 {
-    return mainCamera.getCenter();
+    views_[viewName] = new sf::View(sf::FloatRect(0.0f, 0.0f, size.x, size.y));
+    //SetCurrentView(viewName);
 }
 
-sf::Vector2f Camera::GetCameraViewSize()
+void Camera::SetView(const std::string& viewName, const sf::FloatRect& viewArea)
 {
-    return mainCamera.getSize();
+    views_[viewName] = new sf::View(viewArea);
+    //SetCurrentView(viewName);
 }
 
-float Camera::GetCameraRightEdge()
+sf::View* Camera::GetView(const std::string& viewName)
 {
-    return GetCameraCenter().x + (GetCameraViewSize().x / 2);
+    return views_[viewName];
 }
 
-float Camera::GetCameraLeftEdge()
+std::unordered_map<std::string, sf::View*> Camera::GetAllViews()
 {
-    return GetCameraCenter().x - (GetCameraViewSize().x / 2);
+    return views_;
 }
 
-float Camera::GetCameraTopEdge()
+void Camera::RemoveView(const std::string& viewName)
 {
-    return GetCameraCenter().y - (GetCameraViewSize().y / 2);
+    //Not sure if needed but left here just in case this may be used in the future
 }
 
-float Camera::GetCameraBottomEdge()
+void Camera::Clear()
 {
-    return GetCameraCenter().y + (GetCameraViewSize().y / 2);
+    for (auto view : views_)
+    {
+        delete view.second;
+    }
+    views_.clear();
 }
