@@ -8,8 +8,8 @@ public:
     ~MiniGameManager();
     void SetDifficulty(const int difficulty);
     int GetDifficulty() const;
-    void SetWin(const bool win);
-    bool GetWin() const;
+    void SetOutcome(const bool outcome);
+    bool GetOutcome() const;
     void SetPlayCount(const int winCount);
     void IncrementPlayCount();
     int GetPlayCount() const;
@@ -23,7 +23,7 @@ public:
 
 private:
     int difficulty_{0};
-    bool win_{false};
+    bool outcome_{true};
     int playCount_{0};
     int HP_{0};
     float timerModifier_{0.0f};

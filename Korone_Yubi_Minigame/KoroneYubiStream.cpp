@@ -21,6 +21,8 @@ KoroneYubiStream::KoroneYubiStream(sf::Vector2f position, Scene* scene)
         sprite.setOrigin(sf::Vector2f(-40, -226));
         sprite.setPosition(position_);
     }
+
+    scene_->FindGameObject("Hand")->Kill();
 }
 
 KoroneYubiStream::~KoroneYubiStream()

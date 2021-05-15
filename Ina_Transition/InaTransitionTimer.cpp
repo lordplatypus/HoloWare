@@ -16,12 +16,16 @@ InaTransitionTimer::InaTransitionTimer(sf::Vector2f position, float sec, Scene* 
     //scale_= scale / 2.0f;
 
     end_ = LP::SetSprite(ina_transition_timer_end_image, position_);
+    end_.setScale(scale_);
     for (int i = 0; i < ceil(sec_); i++)
     {
-        segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + 64 + 128 * i, position_.y)));
+        segments_.push_back(LP::SetSprite(ina_transition_timer_segment_image, sf::Vector2f(position_.x + (64 * scale_.x) + (128 * scale_.x) * i, position_.y)));
+        segments_[i].setScale(scale_);
     }
-    bomb_ = LP::SetSprite(ina_transition_timer_bomb_image, sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
-    explosion_ = LP::SetSprite(transition_explosion_image, sf::Vector2f(position_.x + 32, position_.y + 32));
+    bomb_ = LP::SetSprite(ina_transition_timer_bomb_image, sf::Vector2f(position_.x + (64 * scale_.x) + (128 * scale_.x) * segments_.size(), position_.y));
+    bomb_.setScale(scale_);
+    explosion_ = LP::SetSprite(transition_explosion_image, sf::Vector2f(position_.x + 32 * scale_.x, position_.y + 32 * scale_.y));
+    explosion_.setScale(scale_);
     LP::SetSpriteOriginCenter(&explosion_);
 }
 
@@ -37,7 +41,7 @@ void InaTransitionTimer::Update(float delta_time)
         if (segments_.size() > 0)
         {
             segments_.pop_back();
-            bomb_.setPosition(sf::Vector2f(position_.x + 64 + 128 * segments_.size(), position_.y));
+            bomb_.setPosition(sf::Vector2f(position_.x + (64 * scale_.x) + (128 * scale_.x) * segments_.size(), position_.y));
         }
         else if (deathSequence_)
         {

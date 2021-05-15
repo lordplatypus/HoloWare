@@ -13,10 +13,10 @@
     angleVelocity_ = rand() % 1000 + 100;
     imageWidth_ = 59;
     imageHeight_ = 90;
-    SetLeft(0);
-    SetRight(imageWidth_);
-    SetTop(0);
-    SetBottom(imageHeight_);
+    SetLeft(-imageWidth_/2);
+    SetRight(imageWidth_/2);
+    SetTop(-imageHeight_/2);
+    SetBottom(imageHeight_/2);
 
     sprite_ = LP::SetSprite(kiara_chicken_chicken_image, position_);
     LP::SetSpriteOriginCenter(&sprite_);
@@ -35,6 +35,7 @@ void  KiaraChickenChicken::Update(float delta_time)
 
 void  KiaraChickenChicken::Draw(sf::RenderWindow& render_window) const
 {
+    render_window.setView(*scene_->FindView("Main"));
     render_window.draw(sprite_);
 }
 

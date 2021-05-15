@@ -97,7 +97,7 @@ sf::View* KoroneYubiScene::FindView(const std::string& viewName)
 
 void KoroneYubiScene::SetOutcome(const bool outcome)
 {
-    game_->GetMiniGameManager().SetWin(outcome);
+    game_->GetMiniGameManager().SetOutcome(outcome);
 }
 
 // void KoroneYubiScene::OnWin()

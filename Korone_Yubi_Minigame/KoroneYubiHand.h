@@ -10,7 +10,7 @@ public:
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;
 
-    void SetActive();
+    void SetActiveHand();
 
 private:
     void InputHandle();
@@ -18,7 +18,7 @@ private:
 private:
     int frame_{0};
     std::vector<sf::Sprite> sprites_;
-    bool active_{false}; //current active hand
+    bool activeHand_{false}; //current active hand
     KoroneYubiHand* nextHand_{nullptr}; //next hand
     int maxHands_{0}; //increases with difficulty
 };

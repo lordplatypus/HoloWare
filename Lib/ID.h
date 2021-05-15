@@ -55,6 +55,7 @@ enum Scenes//Scenes
 
 enum //Render Layer
 {
+    background_layer,
     main_layer,
     minigame_UI_layer,
     timer_layer,

@@ -22,7 +22,7 @@ void InaTransitionScene::Init()
         state_ = DifficultyUp;
         if (game_->GetMiniGameManager().GetDifficulty() != hard_difficulty) game_->GetMiniGameManager().SetDifficulty(game_->GetMiniGameManager().GetDifficulty() + 1);
     }
-    else if (game_->GetMiniGameManager().GetWin())
+    else if (game_->GetMiniGameManager().GetOutcome())
     {//win
         state_ = WinState;
         game_->GetMiniGameManager().SetTimerModifier(game_->GetMiniGameManager().GetTimerModifier() + 0.1f);
@@ -32,9 +32,10 @@ void InaTransitionScene::Init()
     else
     {//lose
         state_ = LossState;
+        game_->GetMiniGameManager().DecrementHP();
         MP::PlaySound(lose_se);
     }
-    game_->GetMiniGameManager().SetWin(false); //reset win for next game
+    game_->GetMiniGameManager().SetOutcome(false); //reset win for next game
 
     background_ = LP::SetSprite(ina_transition_background_image, sf::Vector2f(0.0f, 0.0f));
 
@@ -76,6 +77,8 @@ void InaTransitionScene::Update(float delta_time)
 
 void InaTransitionScene::Draw(sf::RenderWindow& render_window) const
 {
+    //render_window.setView(*FindView("Transition")); //why dosen't this work?
+    render_window.setView(*game_->GetCamera()->GetView("Transition"));
     render_window.draw(background_);
     render_window.draw(timerText_);
     render_window.draw(miniGameCountText_);
@@ -104,7 +107,7 @@ sf::View* InaTransitionScene::FindView(const std::string& viewName)
 
 void InaTransitionScene::SetOutcome(const bool outcome)
 {
-    game_->GetMiniGameManager().SetWin(outcome);
+    game_->GetMiniGameManager().SetOutcome(outcome);
 }
 
 void InaTransitionScene::ChangeScene(const std::string& sceneName)
@@ -119,8 +122,8 @@ void InaTransitionScene::End()
 
 void InaTransitionScene::RandomMiniGame()
 {
-    int randMiniGame = rand() % 2;
-    //int randMiniGame = 1;
+    //int randMiniGame = rand() % 2;
+    int randMiniGame = 1;
     switch (randMiniGame)
     {
     case 0:

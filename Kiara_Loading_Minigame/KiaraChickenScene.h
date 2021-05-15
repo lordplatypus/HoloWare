@@ -23,7 +23,6 @@ public:
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
-    sf::Sprite background_;
 
     //Scene transition
     bool changeScene_{false};

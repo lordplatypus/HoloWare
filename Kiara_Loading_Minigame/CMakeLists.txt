@@ -7,5 +7,6 @@ ${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenRock.cpp
 ${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenScore.cpp
 ${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenPoints.cpp
 ${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraChickenScene.cpp
+${HoloWare_SOURCE_DIR}/Kiara_Loading_Minigame/KiaraLoadingBackground.cpp
 PARENT_SCOPE
 )

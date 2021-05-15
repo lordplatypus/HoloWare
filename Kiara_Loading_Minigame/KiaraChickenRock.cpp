@@ -35,6 +35,7 @@ void  KiaraChickenRock::Update(float delta_time)
 
 void  KiaraChickenRock::Draw(sf::RenderWindow& render_window) const
 {
+    render_window.setView(*scene_->FindView("Main"));
     render_window.draw(sprite_);
 }
 

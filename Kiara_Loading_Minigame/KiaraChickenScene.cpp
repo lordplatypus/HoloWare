@@ -2,6 +2,8 @@
 #include "../Lib/LP.h"
 #include "../Lib/MP.h"
 #include "../Lib/ID.h"
+#include "../Lib/IP.h"
+#include "KiaraLoadingBackground.h"
 #include "KiaraChickenKiara.h"
 #include "KiaraChickenSpawner.h"
 #include "../Ina_Transition/InaTransitionDoorOpen.h"
@@ -18,7 +20,7 @@ void KiaraChickenScene::Init()
     FindView("Main")->setSize(sf::Vector2f(1920.0f, 1080.0f));
     FindView("Main")->setCenter(sf::Vector2f(1920.0f/2, 1080.0f/2));
 
-    background_ = LP::SetSprite(kiara_chicken_background_image);
+    gom_.Add(new KiaraLoadingBackground(this));
     gom_.Add(new KiaraChickenKiara(sf::Vector2f(0.0f, 30.0f), this));
     gom_.Add(new KiaraChickenSpawner(game_->GetMiniGameManager().GetDifficulty(), this));
     MP::PlayMusic(kiara_theme);
@@ -32,6 +34,8 @@ void KiaraChickenScene::Init()
     AddGameObject(new InaTransitionTimer(sf::Vector2f(0.0f, FindView("Transition")->getSize().y - 32), sec, this));
 
     AddGameObject(new InaTransitionDoorOpen(this));
+
+    SortGameObjects();
 }
 
 void KiaraChickenScene::Update(float delta_time)
@@ -58,7 +62,7 @@ void KiaraChickenScene::Update(float delta_time)
         game_->ChangeScene("InaTransition");
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+    if (IP::PressX())
     {
         game_->ChangeScene("InaTransition");
     }
@@ -66,7 +70,6 @@ void KiaraChickenScene::Update(float delta_time)
 
 void KiaraChickenScene::Draw(sf::RenderWindow& render_window) const
 {
-    render_window.draw(background_);
     gom_.Draw(render_window);
     render_window.draw(text_);
 }
@@ -93,30 +96,13 @@ sf::View* KiaraChickenScene::FindView(const std::string& viewName)
 
 void KiaraChickenScene::SetOutcome(const bool outcome)
 {
-    game_->GetMiniGameManager().SetWin(outcome);
+    game_->GetMiniGameManager().SetOutcome(outcome);
 }
 
 void KiaraChickenScene::ChangeScene(const std::string& sceneName)
 {
     changeScene_ = true;
 }
-
-// void KiaraChickenScene::OnWin()
-// {
-//     game_->GetMiniGameManager()->SetWin(true);
-// }
-
-// void KiaraChickenScene::OnLoss()
-// {
-//     if (game_->GetMiniGameManager()->GetWin()) return;
-//     game_->GetMiniGameManager()->SetWin(false);
-//     game_->GetMiniGameManager()->DecrementHP();
-// }
-
-// void KiaraChickenScene::ChangeScene()
-// {
-//     changeScene_ = true;
-// }
 
 void KiaraChickenScene::End()
 {

@@ -18,6 +18,7 @@ private:
     sf::Sprite bomb_;
     sf::Sprite explosion_;
     std::vector<sf::Sprite> segments_;
+    sf::Vector2f scale_{0.5f, 0.5f};
 
     bool deathSequence_{false};
 };

@@ -11,7 +11,7 @@ public:
     ~Camera();
 
     //Get the render window
-    const sf::RenderWindow& GetRenderWindow() const;
+    sf::RenderWindow& GetRenderWindow() const;
     //Set the game aspect ratio
     void SetAspectRatio(const sf::Vector2f& aspectRatio);
     //Get the game aspect ratio

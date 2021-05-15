@@ -1,6 +1,7 @@
 #include "KiaraChickenKiara.h"
 #include "../Lib/LP.h"
 #include "../Lib/ID.h"
+#include "../Lib/IP.h"
 #include "KiaraChickenPoints.h"
 
 KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
@@ -14,9 +15,9 @@ KiaraChickenKiara::KiaraChickenKiara(sf::Vector2f position, Scene* scene)
     imageWidth_ = 1142 / 2;
     imageHeight_ = 1043;
     SetLeft(400);
-    SetRight(400 + 150);
+    SetRight(0);
     SetTop(375);
-    SetBottom(375 + 225);
+    SetBottom(450);
 
     playerSprite_ = LP::SetMultiFrameSprite(kiara_chicken_kiara_image, 1142 / 2, 1043, 2, 1);
     shadowSprite_ = LP::SetSprite(kiara_chicken_shadow_image, sf::Vector2f(position_.x, position_.y + imageHeight_));
@@ -39,16 +40,18 @@ void KiaraChickenKiara::Update(float delta_time)
 
 void KiaraChickenKiara::Draw(sf::RenderWindow& render_window) const
 {
+    render_window.setView(*scene_->FindView("Main"));
     if (!blink_)
     {
-        render_window.draw(playerSprite_[frame_]);
         render_window.draw(shadowSprite_);
+        render_window.draw(playerSprite_[frame_]);
     }
     score_.Draw(render_window);
 }
 
 void KiaraChickenKiara::ReactOnCollision(GameObject& other)
 {
+    if (stun_) return;
     if (other.GetTag() == "Chicken")
     {
         score_.AddToScore(100);
@@ -65,11 +68,11 @@ void KiaraChickenKiara::ReactOnCollision(GameObject& other)
 
 void KiaraChickenKiara::InputHandle(float delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (IP::GetButton(sf::Keyboard::Left))
     {
         position_.x -= velocity_.x * delta_time;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    else if (IP::GetButton(sf::Keyboard::Right))
     {
         position_.x += velocity_.x * delta_time;
     }

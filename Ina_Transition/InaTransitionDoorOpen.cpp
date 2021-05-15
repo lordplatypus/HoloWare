@@ -27,8 +27,16 @@ InaTransitionDoorOpen::~InaTransitionDoorOpen()
 
 void InaTransitionDoorOpen::Update(float delta_time)
 {
-    if (positionRight_ != endPositionRight_) positionRight_ = math_.Lerp(positionRight_, endPositionRight_, 10 * delta_time);
-    if (positionLeft_ != endPositionLeft_) positionLeft_ = math_.Lerp(positionLeft_, endPositionLeft_, 10 * delta_time);
+    if (positionRight_ != endPositionRight_) 
+    {
+        positionRight_ = math_.Lerp(positionRight_, endPositionRight_, 10 * delta_time);
+        spriteRight_.setPosition(positionRight_);
+    }
+    if (positionLeft_ != endPositionLeft_) 
+    {
+        positionLeft_ = math_.Lerp(positionLeft_, endPositionLeft_, 10 * delta_time);
+        spriteLeft_.setPosition(positionLeft_);
+    }
 
     timer_ -= delta_time;
     if (timer_ <= 0.0f) Kill();
@@ -39,5 +47,4 @@ void InaTransitionDoorOpen::Draw(sf::RenderWindow& render_window) const
     render_window.setView(*scene_->FindView("Transition"));
     render_window.draw(spriteRight_);
     render_window.draw(spriteLeft_);
-    render_window.setView(*scene_->FindView("Main"));
 }

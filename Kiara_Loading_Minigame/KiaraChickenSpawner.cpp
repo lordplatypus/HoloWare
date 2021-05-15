@@ -37,4 +37,5 @@ void KiaraChickenSpawner::ChooseObjectToSpawn()
         scene_->AddGameObject(new KiaraChickenChicken(sf::Vector2f(1920, -100), scene_));
         odds_ = difficulty_;
     }
+    scene_->SortGameObjects();
 }

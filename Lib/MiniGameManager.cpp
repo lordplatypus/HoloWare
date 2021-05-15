@@ -24,14 +24,14 @@ int MiniGameManager::GetDifficulty() const
     return difficulty_;
 }
 
-void MiniGameManager::SetWin(const bool win)
+void MiniGameManager::SetOutcome(const bool outcome)
 {
-    win_ = win;
+    outcome_ = outcome;
 }
 
-bool MiniGameManager::GetWin() const
+bool MiniGameManager::GetOutcome() const
 {
-    return win_;
+    return outcome_;
 }
 
 void MiniGameManager::SetPlayCount(const int winCount)
@@ -77,7 +77,7 @@ float MiniGameManager::GetTimerModifier() const
 void MiniGameManager::Reset()
 {
     SetDifficulty(easy_difficulty);
-    SetWin(false);
+    SetOutcome(true);
     SetPlayCount(0);
     SetHP(4);
     SetTimerModifier(0.0f);

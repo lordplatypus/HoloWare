@@ -9,7 +9,7 @@ Camera::~Camera()
     Clear();
 }
 
-const sf::RenderWindow& Camera::GetRenderWindow() const
+sf::RenderWindow& Camera::GetRenderWindow() const
 {
     return *renderWindow_;
 }
