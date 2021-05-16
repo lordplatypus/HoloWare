@@ -4,38 +4,61 @@
 #include "ID.h"
 #include "Math.h"
 
-ParticleManager::ParticleManager()
-{}
+ParticleManager::ParticleManager(Scene* scene)
+{
+    scene_ = scene;
+}
 
 ParticleManager::~ParticleManager()
 {
-    Clear();
+    //Clear();
 }
 
-void ParticleManager::Update(float delta_time)
-{
-    for (auto i : particles)
-    {
-        if(!i->IsDead()) i->Update(delta_time);
-    }
+// void ParticleManager::Update(float delta_time)
+// {
+//     for (auto i : particles)
+//     {
+//         if(!i->IsDead()) i->Update(delta_time);
+//     }
 
-    for (auto i = particles.begin(); i != particles.end(); )
+//     for (auto i = particles.begin(); i != particles.end(); )
+//     {
+//         if ((*i)->IsDead())
+//         {
+//             delete *i;
+//             i = particles.erase(i);
+//         }
+//         else i++;
+//     }
+// }
+
+// void ParticleManager::Draw(sf::RenderWindow& render_window) const
+// {
+//     for (auto i : particles)
+//     {
+//         if (!i->IsDead()) i->Draw(render_window);
+//     }
+// }
+
+void ParticleManager::Add(const int& effect, const sf::Vector2f& position)
+{
+    switch(effect)
     {
-        if ((*i)->IsDead())
-        {
-            delete *i;
-            i = particles.erase(i);
-        }
-        else i++;
+        case money_effect:
+        Money(position);
+        break;
+
+        default:
+        break;
     }
 }
 
-void ParticleManager::Draw(sf::RenderWindow& render_window) const
+void ParticleManager::Money(const sf::Vector2f& position)
 {
-    for (auto i : particles)
-    {
-        if (!i->IsDead()) i->Draw(render_window);
-    }
+    float speed = 5.0f;
+    float vx = (rand() % 6 + 3) * speed;
+    float vy = -(rand() % 10) * speed;
+    scene_->AddGameObject(new Particle(LP::SetSprite(kiara_chicken_cash_image, position), position.x, position.y, vx, vy, 1, 1, 0, -0.1f, 0, -20, 1, 1, 255, 255, 255, 255, 0));
 }
 
 void ParticleManager::Explosion(float x_, float y_)
@@ -133,11 +156,11 @@ void ParticleManager::Sparkle(float x_, float y_)
 }
 
 
-void ParticleManager::Clear()
-{
-    for (auto particle : particles)
-    {
-        delete particle;
-    }
-    particles.clear();
-}
+// void ParticleManager::Clear()
+// {
+//     for (auto particle : particles)
+//     {
+//         delete particle;
+//     }
+//     particles.clear();
+// }

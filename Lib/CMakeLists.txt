@@ -11,8 +11,8 @@ ${HoloWare_SOURCE_DIR}/Lib/main.cpp
 ${HoloWare_SOURCE_DIR}/Lib/Math.cpp
 ${HoloWare_SOURCE_DIR}/Lib/MiniGameManager.cpp
 ${HoloWare_SOURCE_DIR}/Lib/MP.cpp
-#${HoloWare_SOURCE_DIR}/Lib/Particle.cpp
-#${HoloWare_SOURCE_DIR}/Lib/ParticleManager.cpp
+${HoloWare_SOURCE_DIR}/Lib/Particle.cpp
+${HoloWare_SOURCE_DIR}/Lib/ParticleManager.cpp
 ${HoloWare_SOURCE_DIR}/Lib/SceneTitle.cpp
 ${HoloWare_SOURCE_DIR}/Lib/TileMap.cpp
 PARENT_SCOPE

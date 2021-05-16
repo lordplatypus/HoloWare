@@ -11,11 +11,20 @@ enum //Images
     ina_transition_timer_segment_image,
     ina_transition_timer_bomb_image,
     transition_explosion_image,
+
     kiara_chicken_kiara_image,
     kiara_chicken_background_image,
     kiara_chicken_chicken_image,
     kiara_chicken_rock_image,
     kiara_chicken_shadow_image,
+    kiara_chicken_cash_image,
+    kiara_chicken_silver_coin_image,
+    kiara_chicken_bronze_coin_image,
+    kiara_chicken_people_image,
+    kiara_chicken_sweat_image,
+    kiara_chicken_bucket_image,
+    kiara_chicken_register_image,
+
     korone_yubi_left_hand_image,
     korone_yubi_right_hand_image,
     korone_yubi_stream_image,
@@ -61,6 +70,11 @@ enum //Render Layer
     timer_layer,
     transition_layer,
     UI_layer
+};
+
+enum //Particle Effects
+{
+    money_effect
 };
 
 #endif 

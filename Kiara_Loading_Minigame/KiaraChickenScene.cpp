@@ -25,6 +25,8 @@ void KiaraChickenScene::Init()
     gom_.Add(new KiaraChickenSpawner(game_->GetMiniGameManager().GetDifficulty(), this));
     MP::PlayMusic(kiara_theme);
 
+    pm_ = new ParticleManager(this);
+
     textAlpha_ = 255;
     text_ = LP::SetText("Collect at least 1 chicken leg!", sf::Vector2f(FindView("Main")->getCenter()), 128);
     LP::SetTextOriginCenter(&text_);
@@ -79,6 +81,11 @@ void KiaraChickenScene::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject);
 }
 
+void KiaraChickenScene::AddParticleEffect(const int& effect, const sf::Vector2f position)
+{
+    pm_->Add(effect, position);
+}
+
 GameObject* KiaraChickenScene::FindGameObject(const std::string& string, const bool byName, const bool byTag, const bool byID)
 {//if byTag and byID are both left to default (false), search by name
     return gom_.Find(string, byName, byTag, byID); //returns a GameObject, returns a nullptr if the GameObject is not found
@@ -108,4 +115,5 @@ void KiaraChickenScene::End()
 {
     gom_.Clear();
     MP::StopMusic(kiara_theme);
+    delete pm_;
 }

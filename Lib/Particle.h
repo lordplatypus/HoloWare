@@ -1,8 +1,10 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 #include <SFML/Graphics.hpp>
+#include "GameObject.h"
+#include "Math.h"
 
-class Particle
+class Particle : public GameObject
 {
 public:
     Particle(sf::Sprite sprite, float x, float y, float vx, float vy, float damp, float lifespan, float forceX, float forceY, float angle, float angularVelocity, 
@@ -13,6 +15,8 @@ public:
     bool IsDead() const;
 
 private:  
+    Math math_;
+
     bool isDead = false; //Death flag(死亡フラグ)
     float x; //x coordinate(x座標)
     float y; //y coordinate(y座標)
