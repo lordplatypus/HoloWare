@@ -1,12 +1,12 @@
-#ifndef KIARA_CHICKEN_CHICKEN_H_
-#define KIARA_CHICKEN_CHICKEN_H_
+#ifndef CHICKEN_H_
+#define CHICKEN_H_
 #include "../Lib/GameObject.h"
 
-class KiaraChickenChicken : public GameObject
+class Chicken : public GameObject
 {
 public:
-    KiaraChickenChicken(sf::Vector2f position, Scene* scene);
-    ~KiaraChickenChicken();
+    Chicken(sf::Vector2f position, Scene* scene);
+    ~Chicken();
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;
     void ReactOnCollision(GameObject& other) override;

@@ -46,6 +46,8 @@ void InaTransitionDoorClose::Update(float delta_time)
 
     timer_ -= delta_time;
     if (timer_ <= 0.0f) scene_->ChangeScene("");
+
+    scene_->SortGameObjects();
 }
 
 void InaTransitionDoorClose::Draw(sf::RenderWindow& render_window) const

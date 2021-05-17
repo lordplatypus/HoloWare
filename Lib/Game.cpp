@@ -6,7 +6,7 @@
 #include "SceneTitle.h"
 #include "IP.h"
 #include "../Ina_Transition/InaTransitionScene.h"
-#include "../Kiara_Loading_Minigame/KiaraChickenScene.h"
+#include "../Kiara_Loading_Minigame/KiaraScene.h"
 #include "../Korone_Yubi_Minigame/KoroneYubiScene.h"
 
 static SceneNull nullScene;
@@ -18,7 +18,7 @@ Game::Game(Camera* camera) : camera_{camera}, scene_{&nullScene}
 
     AddScene("Title", new SceneTitle(this));
     AddScene("InaTransition", new InaTransitionScene(this));
-    AddScene("KiaraChicken", new KiaraChickenScene(this));
+    AddScene("KiaraChicken", new KiaraScene(this));
     AddScene("KoroneYubi", new KoroneYubiScene(this));
 
     scene_ = scenes_["Title"];

@@ -17,8 +17,6 @@ public:
     virtual void Draw(sf::RenderWindow& render_window) const = 0;
     //Add gameobject to the list of gameobjects
     virtual void AddGameObject(GameObject* gameObject) = 0;
-    //Add a particle effect using ID(enum) system
-    virtual void AddParticleEffect(const int& effect, const sf::Vector2f position) = 0;
     //Find an object by either ID, Tag, or Name
     virtual GameObject* FindGameObject(const std::string& string, const bool byName = true, const bool byTag = false, const bool byID = false) = 0;
     //Sort the GameObject list based on LayerID (found in GameObjects)

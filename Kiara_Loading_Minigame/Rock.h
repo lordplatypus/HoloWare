@@ -1,12 +1,12 @@
-#ifndef KIARA_CHICKEN_ROCK_H_
-#define KIARA_CHICKEN_ROCK_H_
+#ifndef ROCK_H_
+#define ROCK_H_
 #include "../Lib/GameObject.h"
 
-class KiaraChickenRock : public GameObject
+class Rock : public GameObject
 {
 public:
-    KiaraChickenRock(sf::Vector2f position, Scene* scene);
-    ~KiaraChickenRock();
+    Rock(sf::Vector2f position, Scene* scene);
+    ~Rock();
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;
     void ReactOnCollision(GameObject& other) override;

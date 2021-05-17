@@ -1,12 +1,12 @@
-#ifndef KIARA_CHICKEN_POINTS_H_
-#define KIARA_CHICKEN_POINTS_H_
+#ifndef POINTS_H_
+#define POINTS_H_
 #include "../Lib/GameObject.h"
 
-class KiaraChickenPoints : public GameObject
+class Points : public GameObject
 {
 public:
-    KiaraChickenPoints(sf::Vector2f position, Scene* scene);
-    ~KiaraChickenPoints();
+    Points(sf::Vector2f position, Scene* scene);
+    ~Points();
     void Update(float delta_time) override;
     void Draw(sf::RenderWindow& render_window) const override;
 

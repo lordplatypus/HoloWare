@@ -1,20 +1,22 @@
-#ifndef KIARA_CHICKEN_SCENE_H_
-#define KIARA_CHICKEN_SCENE_H_
+#ifndef KIARA_SCENE_H_
+#define KIARA_SCENE_H_
 #include "../Lib/Scene.h"
 #include "../Lib/Game.h"
 #include "../Lib/GameObjectManager.h"
 #include "../Lib/ParticleManager.h"
 
-class KiaraChickenScene : public Scene
+#include "Register.h"
+#include "BackgroundPeople.h"
+
+class KiaraScene : public Scene
 {
 public:
-    KiaraChickenScene(Game* game);
-    ~KiaraChickenScene();
+    KiaraScene(Game* game);
+    ~KiaraScene();
     virtual void Init() override;
     virtual void Update(float delta_time) override;
     virtual void Draw(sf::RenderWindow& render_window) const override;
     virtual void AddGameObject(GameObject* gameObject) override;
-    virtual void AddParticleEffect(const int& effect, const sf::Vector2f position) override;
     virtual GameObject* FindGameObject(const std::string& string, const bool byName = true, const bool byTag = false, const bool byID = false) override;
     virtual void SortGameObjects() override;
     virtual sf::View* FindView(const std::string& viewName) override;
@@ -25,7 +27,7 @@ public:
 private:
     Game* game_{nullptr};
     GameObjectManager gom_;
-    ParticleManager* pm_{nullptr};
+    ParticleManager pm_;
 
     //Scene transition
     bool changeScene_{false};
@@ -34,6 +36,10 @@ private:
     sf::Text text_;
     int textAlpha_{255};
     float textTimer_{0.1f};
+
+    //objects
+    std::vector<Register*> register_;
+    std::vector<BackgroundPeople*> people_;
 };
 
 #endif

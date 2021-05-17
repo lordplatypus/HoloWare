@@ -66,15 +66,11 @@ enum //Render Layer
 {
     background_layer,
     main_layer,
+    particle_layer,
     minigame_UI_layer,
     timer_layer,
     transition_layer,
     UI_layer
-};
-
-enum //Particle Effects
-{
-    money_effect
 };
 
 #endif 

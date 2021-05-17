@@ -1,12 +1,12 @@
-#ifndef KIARA_CHICKEN_SPAWNER_H_
-#define KIARA_CHICKEN_SPAWNER_H_
+#ifndef SPAWNER_H_
+#define SPAWNER_H_
 #include "../Lib/GameObject.h"
 
-class KiaraChickenSpawner : public GameObject
+class Spawner : public GameObject
 {
 public:
-    KiaraChickenSpawner(int difficulty, Scene* scene);
-    ~KiaraChickenSpawner();
+    Spawner(int difficulty, Scene* scene);
+    ~Spawner();
     void Update(float delta_time) override;
 
 private:

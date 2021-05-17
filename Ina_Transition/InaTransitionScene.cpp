@@ -90,11 +90,6 @@ void InaTransitionScene::AddGameObject(GameObject* gameObject)
     gom_.Add(gameObject);
 }
 
-void InaTransitionScene::AddParticleEffect(const int& effect, const sf::Vector2f position)
-{
-    pm_->Add(effect, position);
-}
-
 GameObject* InaTransitionScene::FindGameObject(const std::string& string, const bool byName, const bool byTag, const bool byID)
 {//if byTag and byID are both left to default (false), search by name
     return gom_.Find(string, byName, byTag, byID); //returns a GameObject, returns a nullptr if the GameObject is not found
